@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\{
     CustomerController,
     DashboardController,
     PermissionController,
+    ProductController,
     RoleController,
     UnitController,
     VendorController
@@ -56,6 +57,7 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
     Route::resource("units",UnitController::class)->except(["create","show","edit"]);
     Route::resource("customers",CustomerController::class)->except(["create","show","edit"]);
     Route::resource("vendors",VendorController::class)->except(["create","show","edit"]);
+    Route::resource("products",ProductController::class);
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);
     Route::get('/download', function (Request $request) {

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("product_id");
+            $table->integer("stock");
+            $table->text("remarks")->nullable();
+            $table->foreignId("admin_id");
             $table->timestamps();
         });
     }
