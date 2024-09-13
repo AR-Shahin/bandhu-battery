@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\{
     CategoryController,
     CustomerController,
     DashboardController,
+    OrderController,
     PermissionController,
     ProductController,
     RoleController,
@@ -61,6 +62,12 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
     Route::controller(ProductController::class)->prefix("product")->name("products.")->group(function(){
         Route::get("stock/{product}","stock")->name("stock");
         Route::post("stock_adjust/{product}","stock_adjust")->name("stock_adjust");
+    });
+
+    Route::controller(OrderController::class)->prefix("order")->name("orders.")->group(function(){
+        Route::get("index","index")->name("index");
+        Route::get("create","create")->name("create");
+        Route::post("store","store")->name("store");
     });
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);

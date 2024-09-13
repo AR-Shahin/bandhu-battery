@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('sells', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("customer_id");
+            $table->foreignId("admin_id");
+            $table->string("invoice_id");
+            $table->integer("quantity");
+            $table->string("status",50)->default("placed");
+            $table->text("remarks")->nullable();
             $table->timestamps();
         });
     }

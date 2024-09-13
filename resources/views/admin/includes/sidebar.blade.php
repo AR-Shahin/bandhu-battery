@@ -37,13 +37,14 @@
             <a href="{{ route('admin.dashboard') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Home
+                Dashboard
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.categories.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-sitemap"></i>
+
               <p>
                 Category
               </p>
@@ -51,7 +52,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.brands.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fab fa-bandcamp"></i>
               <p>
                 Brand
               </p>
@@ -60,7 +61,7 @@
 
           <li class="nav-item">
             <a href="{{ route('admin.units.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-ring"></i>
               <p>
                 Unit
               </p>
@@ -68,7 +69,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.customers.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Customer
               </p>
@@ -76,7 +77,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.vendors.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Vendor
               </p>
@@ -84,9 +85,17 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.products.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class=" nav-icon fas fa-car-battery"></i>
               <p>
                 Product
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.orders.index') }}" class="nav-link">
+              <i class="nav-icon fab fa-first-order"></i>
+              <p>
+                Order
               </p>
             </a>
           </li>

@@ -3,31 +3,34 @@
 @section("title","Dashboard")
 
 @section("master_content")
+<div style="overflow: hidden">
+    <div class="card">
+        <div class="card-body text-center">
 
-<div class="card">
-    <div class="card-body">
-        <form action="{{ route("admin.backup") }}" method="POST" class="d-inline mx-2">
-            @csrf
-            <button class="btn btn-sm btn-success"><i class="fas fa-trash-restore-alt mr-1"></i> Backup Site Data</button>
-        </form>
-        <form action="{{ route("admin.backup_db") }}" method="POST" class="d-inline">
-            @csrf
-            <button class="btn btn-sm btn-info"><i class="fas fa-trash-restore-alt mr-1"></i> Database Backup Only</button>
-        </form>
+            <form action="{{ route("admin.backup") }}" method="POST" class="d-inline-block mx-2 mb-2">
+                @csrf
+                <button class="btn btn-sm btn-success"><i class="fas fa-trash-restore-alt mr-1"></i> Backup Site Data</button>
+            </form>
+            <form action="{{ route("admin.backup_db") }}" method="POST" class="d-inline ">
+                @csrf
+                <button class="btn btn-sm btn-info"><i class="fas fa-trash-restore-alt mr-1"></i> Database Backup Only</button>
+            </form>
+        </div>
     </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6 align-self-center">
-                <div id="chart"></div>
-            </div>
-            <div class="col-md-6">
-                <div id="bar"></div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                    <div id="chart"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="bar"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @stop
 
