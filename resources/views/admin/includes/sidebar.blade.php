@@ -49,6 +49,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.brands.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Brand
+              </p>
+            </a>
+          </li>
           {{-- @php
               dd($permissions);
           @endphp --}}

@@ -4,6 +4,7 @@ use App\Helper\Trait\Helper;
 use App\Http\Controllers\Admin\{
     AdminController,
     BackupController,
+    BrandController,
     CategoryController,
     DashboardController,
     PermissionController,
@@ -48,6 +49,7 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
 
     # Category
     Route::resource("categories",CategoryController::class)->except(["create","show","edit"]);
+    Route::resource("brands",BrandController::class)->except(["create","show","edit"]);
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);
     Route::get('/download', function (Request $request) {
