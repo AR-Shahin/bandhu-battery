@@ -15,16 +15,16 @@ class UnitSeeder extends Seeder
     {
         DB::table('units')->insert([
             [
-                'name_en' => 'kg',
-                'name_bn' => 'কেজি',
+                'en_name' => 'kg',
+                'bn_name' => 'কেজি',
             ],
             [
-                'name_en' => 'liter',
-                'name_bn' => 'লিটার',
+                'en_name' => 'liter',
+                'bn_name' => 'লিটার',
             ],
             [
-                'name_en' => 'piece',
-                'name_bn' => 'পিস',
+                'en_name' => 'piece',
+                'bn_name' => 'পিস',
             ],
         ]);
     }

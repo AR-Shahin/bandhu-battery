@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Unit;
+use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\Vendor;
 use App\Repositories\BaseCRUDRepository;
 
 class ProductController extends Controller
@@ -16,51 +20,77 @@ class ProductController extends Controller
     function __construct()
     {
         parent::__construct();
-        $this->repository = new BaseCRUDRepository(new Category());
+        $this->repository = new BaseCRUDRepository(new Product());
     }
 
     function index(Request $request, Category $category)  {
-        $categories = $category->rootCategories();
 
         if($request->ajax()){
 
-            return $this->table($this->repository->query(["parent"]))
+            return $this->table($this->repository->query(["category","brand","unit","vendor"]))
                 ->addIndexColumn()
-                ->addColumn("name",fn($row) => "$row->bn_name - $row->en_name")
-                ->addColumn("actions",function($row) use ($categories){
-                    $deleteRoute = route('admin.categories.destroy', $row["id"]);
-                    $editRoute = route('admin.categories.update', $row["id"]);
-                    $html = $this->generateCategoryEditButton($row,$editRoute,$categories) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
+                ->addColumn("stock",function($row){
+                    if($row->stock < 10){
+                        return "<span class='badge bg-danger'>{$row->stock}</span>";
+                    }
+                    return "<span class='badge bg-success'>{$row->stock}</span>";
+                })
+                ->addColumn("actions",function($row){
+                    $deleteRoute = route('admin.products.destroy', $row["id"]);
+                    $editRoute = route('admin.products.update', $row["id"]);
+                    $html = $this->generateEditButton($row,$editRoute,) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
                     return $html;
                 })
 
                 ->addColumn("status", fn($row) => $row->status_badge)
 
-                ->rawColumns(["actions","status","name"])
+                ->rawColumns(["actions","status","stock"])
                 ->make(true);
         }
-        return view("admin.product.index",compact("categories"));
+        return view("admin.product.index");
     }
 
-    function destroy($category) {
-        if($this->repository->delete($category)){
+    function destroy($product) {
+        if($this->repository->delete($product)){
             $this->deletedAlert();
             return back();
         }
     }
 
+    function create() {
+        $categories = Category::latest()->get();
+        $brands = Brand::latest()->get();
+        $units = Unit::latest()->get();
+        $brands = Brand::latest()->get();
+        $vendors = Vendor::latest()->get();
+        return view("admin.product.create",compact("categories","brands","units","vendors"));
+    }
     function store(Request $request) {
         $request->validate([
-            "bn_name" => ["required","unique:$this->table,bn_name"],
-            "en_name" => ["required","unique:$this->table,en_name"],
+            "category_id" => ["required"],
+            "brand_id" => ["required"],
+            "unit_id" => ["required"],
+            "name" => ["required"],
+            "stock" => ["required"],
+        ]);
+        $product = $this->repository->store([
+            "category_id" => $request->category_id,
+            "brand_id" => $request->brand_id,
+            "unit_id" => $request->unit_id,
+            "name" => $request->name,
+            "stock" => $request->stock,
+            "vendor_id" => $request->vendor_id,
+            "admin_id" => auth()->id(),
+            "code" => "-",
+            "description" => $request->des
         ]);
         if(
-            $this->repository->store([
-                "parent_id" => $request->parent_id ?? null,
-                "bn_name" => $request->bn_name,
-                "en_name" => $request->en_name,
-            ])
-        ){
+            $product
+        )
+        {
+            $product->update([
+                "code" => "PN-{$product->id}"
+            ]);
             $this->createdAlert();
             return back();
         }

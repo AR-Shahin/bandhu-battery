@@ -15,12 +15,12 @@ class BrandSeeder extends Seeder
     {
         DB::table('brands')->insert([
             [
-                'name_en' => 'Hamco',
-                'name_bn' => 'হ্যামকো',
+                'en_name' => 'Hamco',
+                'bn_name' => 'হ্যামকো',
             ],
             [
-                'name_en' => 'Rahim Afro',
-                'name_bn' => 'রহিম আফ্রো',
+                'en_name' => 'Rahim Afroz',
+                'bn_name' => 'রহিম আফ্রো',
             ],
         ]);
     }

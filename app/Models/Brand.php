@@ -10,4 +10,7 @@ class Brand extends Model
 {
     use HasFactory,StatusAttribute;
     protected $guarded = [];
+    function getNameAttribute() {
+        return $this->bn_name . " " . $this->en_name;
+    }
 }

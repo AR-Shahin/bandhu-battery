@@ -14,20 +14,30 @@
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-body">
-                <h3>Manage Product</h3>
+                @php
+                $route = route("admin.products.create");
+            @endphp
+
+            <x-ui.card-top-add
+            heading="Manage Products"
+            permission="admin-create"
+            :route="$route"
+            :permissions="$permissions"
+            />
+
                 <hr>
                 <div class="table-responsive text-center">
                     <table class="table table-sm table-bordered data-table">
                         <thead class="text-center">
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Subcategory</th>
-                                <th>Brand</th>
-                                <th>Unit</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                            <tr >
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Stock</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">Brand</th>
+                                <th class="text-center">Unit</th>
+                                <th class="text-center">Vendor</th>
+                                <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -47,11 +57,14 @@
 
 <script>
 
-initalizeDatatable("{{ route('admin.categories.index') }}",[
-            { data: 'DT_RowIndex', 'orderable': false, 'searchable': false },
+initalizeDatatable("{{ route('admin.products.index') }}",[
             {data: 'name', name: 'name'},
-            {data: 'parent.bn_name', name: 'parent', 'orderable': false, 'searchable': false},
-            {data: 'status', name: 'status'},
+            {data: 'code', name: 'code'},
+            {data: 'stock', name: 'stock'},
+            {data: 'category.bn_name.', name: 'category'},
+            {data: 'brand.bn_name.', name: 'brand'},
+            {data: 'unit.bn_name.', name: 'unit'},
+            {data: 'vendor.name.', name: 'vendor'},
             {data: 'actions', name: 'actions'},
         ]);
 </script>
