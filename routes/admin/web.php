@@ -6,10 +6,12 @@ use App\Http\Controllers\Admin\{
     BackupController,
     BrandController,
     CategoryController,
+    CustomerController,
     DashboardController,
     PermissionController,
     RoleController,
-    UnitController
+    UnitController,
+    VendorController
 };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +54,8 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
     Route::resource("categories",CategoryController::class)->except(["create","show","edit"]);
     Route::resource("brands",BrandController::class)->except(["create","show","edit"]);
     Route::resource("units",UnitController::class)->except(["create","show","edit"]);
+    Route::resource("customers",CustomerController::class)->except(["create","show","edit"]);
+    Route::resource("vendors",VendorController::class)->except(["create","show","edit"]);
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);
     Route::get('/download', function (Request $request) {

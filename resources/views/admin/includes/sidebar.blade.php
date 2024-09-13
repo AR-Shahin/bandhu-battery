@@ -66,6 +66,22 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.customers.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Customer
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.vendors.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Vendor
+              </p>
+            </a>
+          </li>
           {{-- @php
               dd($permissions);
           @endphp --}}
