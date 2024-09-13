@@ -43,13 +43,13 @@
           width: 380,
           type: 'pie',
         },
+        legend: {
+    show: false // This disables the legend
+  },
         labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
         responsive: [{
           breakpoint: 480,
           options: {
-            // chart: {
-            //   width: 200
-            // },
             legend: {
               position: 'bottom'
             }
