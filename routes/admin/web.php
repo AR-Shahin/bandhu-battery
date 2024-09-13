@@ -68,6 +68,7 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
         Route::get("index","index")->name("index");
         Route::get("create","create")->name("create");
         Route::post("store","store")->name("store");
+        Route::get("view/{sell}","view")->name("view");
     });
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);

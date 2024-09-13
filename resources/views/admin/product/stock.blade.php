@@ -89,7 +89,7 @@ initalizeDatatable("{{ route('admin.products.stock',$product->id) }}",[
             {data: 'stock', name: 'stock'},
             {data: 'flag', name: 'flag'},
             {data: 'remarks', name: 'remarks'},
-            {data: 'admin.name', name: 'admin'},
+            {data: 'admin.name', name: 'admin.name'},
         ]);
 </script>
 @endpush
