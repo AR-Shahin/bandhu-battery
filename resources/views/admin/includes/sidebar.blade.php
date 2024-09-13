@@ -57,6 +57,15 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{ route('admin.units.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Unit
+              </p>
+            </a>
+          </li>
           {{-- @php
               dd($permissions);
           @endphp --}}

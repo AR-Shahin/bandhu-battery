@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\{
     CategoryController,
     DashboardController,
     PermissionController,
-    RoleController
+    RoleController,
+    UnitController
 };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,7 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
     # Category
     Route::resource("categories",CategoryController::class)->except(["create","show","edit"]);
     Route::resource("brands",BrandController::class)->except(["create","show","edit"]);
+    Route::resource("units",UnitController::class)->except(["create","show","edit"]);
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);
     Route::get('/download', function (Request $request) {
