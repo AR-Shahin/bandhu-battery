@@ -22,6 +22,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Parent</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -40,7 +41,17 @@
                 <h3>Create Category</h3>
                 <form action="{{ route('admin.categories.store') }}" method="POST">
                     @csrf
-                    <x-form.input label="Name" type="text" name="name" placeholder="Enter name" id="name"/>
+                    <x-form.input label="En Name" type="text" name="en_name" placeholder="Enter en_name" id="en_name"/>
+                    <x-form.input label="Bn Name" type="text" name="bn_name" placeholder="Enter bn_name" id="bn_name"/>
+                    <div class="form-group">
+                        <label for="">Parent Category</label>
+                        <select name="parent_id" id="" class="form-control">
+                            <option value="">Select Parent</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->bn_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <x-form.submit/>
                 </form>
             </div>
@@ -59,6 +70,7 @@
 initalizeDatatable("{{ route('admin.categories.index') }}",[
             { data: 'DT_RowIndex', 'orderable': false, 'searchable': false },
             {data: 'name', name: 'name'},
+            {data: 'parent.bn_name', name: 'parent', 'orderable': false, 'searchable': false},
             {data: 'status', name: 'status'},
             {data: 'actions', name: 'actions'},
         ]);

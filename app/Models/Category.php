@@ -10,6 +10,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Category extends Model
 {
     use HasFactory,StatusAttribute,SlugMutator;
-    
+
     protected $guarded = [];
+
+    function parent()  {
+        return $this->belongsTo(Category::class,"parent_id")->withDefault([
+            "bn_name" => "Root",
+            "en_name" => "Root",
+        ]);
+    }
+
+    function getNameAttribute() {
+        return $this->bn_name . " " . $this->en_name;
+    }
+
+    function rootCategories()  {
+        return self::whereNull("parent_id")->get();
+    }
 }

@@ -6,8 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BaseCRUDRequest;
-use App\Repository\BaseCRUDRepository;
+use App\Repositories\BaseCRUDRepository;
 
 class CategoryController extends Controller
 {
@@ -20,26 +19,27 @@ class CategoryController extends Controller
         $this->repository = new BaseCRUDRepository(new Category());
     }
 
-    function index(Request $request)  {
+    function index(Request $request, Category $category)  {
+        $categories = $category->rootCategories();
 
         if($request->ajax()){
 
-            return $this->table($this->repository->query())
+            return $this->table($this->repository->query(["parent"]))
                 ->addIndexColumn()
-                ->addColumn("actions",function($row){
+                ->addColumn("name",fn($row) => "$row->bn_name - $row->en_name")
+                ->addColumn("actions",function($row) use ($categories){
                     $deleteRoute = route('admin.categories.destroy', $row["id"]);
                     $editRoute = route('admin.categories.update', $row["id"]);
-                    $html = $this->generateEditButton($row,$editRoute) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
+                    $html = $this->generateCategoryEditButton($row,$editRoute,$categories) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
                     return $html;
                 })
 
                 ->addColumn("status", fn($row) => $row->status_badge)
 
-                ->rawColumns(["actions","status"])
+                ->rawColumns(["actions","status","name"])
                 ->make(true);
         }
-
-        return view("admin.category.index");
+        return view("admin.category.index",compact("categories"));
     }
 
     function destroy($category) {
@@ -51,16 +51,15 @@ class CategoryController extends Controller
 
     function store(Request $request) {
         $request->validate([
-            "name" => ["required","unique:$this->table,name"]
+            "bn_name" => ["required","unique:$this->table,bn_name"],
+            "en_name" => ["required","unique:$this->table,en_name"],
+            "parent_id" => ["required"]
         ]);
-
-        
-
-        
         if(
             $this->repository->store([
-                "name" => $request->name,
-                "slug" => $request->name,
+                "parent_id" => $request->parent_id,
+                "bn_name" => $request->bn_name,
+                "en_name" => $request->en_name,
             ])
         ){
             $this->createdAlert();
