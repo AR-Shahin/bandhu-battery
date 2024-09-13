@@ -31,6 +31,9 @@ class Product extends Model
         return $this->hasMany(ProductStock::class,"product_id");
     }
 
+    function sells()  {
+        return $this->hasMany(Sell::class);
+    }
     function update_stock($stock,$flag,$remarks) {
         $this->stock_history()->create([
             "stock" => $stock,

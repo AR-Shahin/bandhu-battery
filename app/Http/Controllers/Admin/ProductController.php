@@ -41,9 +41,10 @@ class ProductController extends Controller
                 ->addColumn("actions",function($row){
                     $deleteRoute = route('admin.products.destroy', $row["id"]);
                     $editRoute = route('admin.products.update', $row["id"]);
+
                     $html = "";
                     $html .= '<a class="btn btn-sm btn-success mr-1" href="'. route("admin.products.stock",$row->id).'">স্টক হিসাব</a>';
-                    $html .= $this->generateEditButton($row,$editRoute,) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
+                    $html .= '<a class="btn btn-sm btn-info mr-1" href="'. route("admin.products.edit",$row->id).'"> <i class="fa fa-edit"></i></a>';
                     return $html;
                 })
 
@@ -56,10 +57,13 @@ class ProductController extends Controller
     }
 
     function destroy($product) {
-        if($this->repository->delete($product)){
-            $this->deletedAlert();
-            return back();
+        if(!$product->sells()->exists()){
+            if($this->repository->delete($product)){
+                $this->deletedAlert();
+                return back();
+            }
         }
+
     }
 
     function create() {
@@ -154,17 +158,26 @@ class ProductController extends Controller
             dd($e->getMessage());
         }
     }
-    function update(Request $request,$id) {
 
-        // $request->validate([
-        //     "bn_name" => ["required","unique:$this->table,bn_name"],
-        //     "en_name" => ["required","unique:$this->table,en_name"],
-        // ]);
+    function edit(Product $product)  {
+        $categories = Category::latest()->get();
+        $brands = Brand::latest()->get();
+        $units = Unit::latest()->get();
+        $brands = Brand::latest()->get();
+        $vendors = Vendor::latest()->get();
+        return view("admin.product.edit",compact("product",
+        "categories","brands","units","vendors"));
+    }
+    function update(Request $request,$id) {
         if(
             $this->repository->update($id,[
-                "bn_name" => $request->bn_name,
-                "en_name" => $request->en_name,
-                "parent_id" => $request->parent_id ?? null,
+                "category_id" => $request->category_id,
+                "brand_id" => $request->brand_id,
+                "unit_id" => $request->unit_id,
+                "name" => $request->name,
+                "vendor_id" => $request->vendor_id,
+                "admin_id" => auth()->id(),
+                "description" => $request->des
             ])
         ){
             $this->updatedAlert();
