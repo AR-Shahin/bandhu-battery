@@ -58,6 +58,10 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
     Route::resource("customers",CustomerController::class)->except(["create","show","edit"]);
     Route::resource("vendors",VendorController::class)->except(["create","show","edit"]);
     Route::resource("products",ProductController::class);
+    Route::controller(ProductController::class)->prefix("product")->name("products.")->group(function(){
+        Route::get("stock/{product}","stock")->name("stock");
+        Route::post("stock_adjust/{product}","stock_adjust")->name("stock_adjust");
+    });
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);
     Route::get('/download', function (Request $request) {

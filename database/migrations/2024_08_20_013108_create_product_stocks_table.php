@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("product_id");
             $table->integer("stock");
+            $table->string("flag");
             $table->text("remarks")->nullable();
             $table->foreignId("admin_id");
             $table->timestamps();

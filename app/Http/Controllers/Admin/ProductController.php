@@ -9,8 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductStock;
 use App\Models\Vendor;
 use App\Repositories\BaseCRUDRepository;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -38,7 +41,9 @@ class ProductController extends Controller
                 ->addColumn("actions",function($row){
                     $deleteRoute = route('admin.products.destroy', $row["id"]);
                     $editRoute = route('admin.products.update', $row["id"]);
-                    $html = $this->generateEditButton($row,$editRoute,) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
+                    $html = "";
+                    $html .= '<a class="btn btn-sm btn-success mr-1" href="'. route("admin.products.stock",$row->id).'">স্টক হিসাব</a>';
+                    $html .= $this->generateEditButton($row,$editRoute,) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
                     return $html;
                 })
 
@@ -70,32 +75,85 @@ class ProductController extends Controller
             "category_id" => ["required"],
             "brand_id" => ["required"],
             "unit_id" => ["required"],
-            "name" => ["required"],
-            "stock" => ["required"],
+            "name" => ["required","unique:products,name"],
+            "stock" => ["nullable"],
         ]);
-        $product = $this->repository->store([
-            "category_id" => $request->category_id,
-            "brand_id" => $request->brand_id,
-            "unit_id" => $request->unit_id,
-            "name" => $request->name,
-            "stock" => $request->stock,
-            "vendor_id" => $request->vendor_id,
-            "admin_id" => auth()->id(),
-            "code" => "-",
-            "description" => $request->des
-        ]);
-        if(
-            $product
-        )
-        {
-            $product->update([
-                "code" => "PN-{$product->id}"
-            ]);
+        try{
+            DB::transaction(function () use($request){
+                $product = $this->repository->store([
+                    "category_id" => $request->category_id,
+                    "brand_id" => $request->brand_id,
+                    "unit_id" => $request->unit_id,
+                    "name" => $request->name,
+                    "stock" => $request->stock ?? 0,
+                    "vendor_id" => $request->vendor_id,
+                    "admin_id" => auth()->id(),
+                    "code" => "-",
+                    "description" => $request->des
+                ]);
+                if($product)
+                {
+                    $product->update([
+                        "code" => "PN-{$product->id}"
+                    ]);
+                    $product->update_stock(
+                        $request->stock ?? 0,
+                        ProductStock::ADD,
+                        "When Product added!"
+                    );
+                }
+            });
+
             $this->createdAlert();
             return back();
+        }catch(Exception $e){
+            $this->logError($e->getMessage());
+            dd($e->getMessage());
         }
     }
 
+    function stock(Request $request,Product $product) {
+
+        if($request->ajax()){
+            $query = ProductStock::query()->with("admin")->whereProductId($product->id)->latest();
+            return $this->table($query)
+                ->addIndexColumn()
+                ->addColumn("created_at",fn($row) => $row->created_at->format("Y-M-d h:i:s"))
+
+                ->addColumn("flag", fn($row) => $row->flag_badge)
+
+                ->rawColumns(["flag","created_at"])
+                ->make(true);
+        }
+        return view("admin.product.stock",compact("product"));
+    }
+
+    function stock_adjust(Request $request,Product $product) {
+        $request->validate([
+            "stock" => ["required"],
+            "flag" => ["required"]
+        ]);
+        if($request->flag == "remove" && $product->stock < $request->stock){
+            $this->warningAlert("Stock is limited");
+            return back();
+        }
+        try{
+            DB::transaction(function() use($request,$product){
+                if($request->flag == "add"){
+                    $product->increment("stock",$request->stock);
+                    $product->update_stock($request->stock,ProductStock::ADD,$request->remarks ?? "");
+                }
+                if($request->flag == "remove"){
+                    $product->decrement("stock",$request->stock);
+                    $product->update_stock($request->stock,ProductStock::REMOVE,$request->remarks ?? "");
+                }
+            });
+            $this->successAlert("Stock Updated");
+            return back();
+        }catch(Exception $e){
+            dd($e->getMessage());
+        }
+    }
     function update(Request $request,$id) {
 
         // $request->validate([

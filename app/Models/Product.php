@@ -26,4 +26,17 @@ class Product extends Model
     function vendor() {
         return $this->belongsTo(Vendor::class);
     }
+
+    function stock_history()  {
+        return $this->hasMany(ProductStock::class,"product_id");
+    }
+
+    function update_stock($stock,$flag,$remarks) {
+        $this->stock_history()->create([
+            "stock" => $stock,
+            "flag" => $flag,
+            "remarks" => $remarks,
+            "admin_id" => auth()->id()
+        ]);
+    }
 }
