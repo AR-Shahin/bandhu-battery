@@ -42,6 +42,9 @@
                 </div>
                 <hr>
                 <h6>বর্তমান স্টক : <b>{{ $product->stock }}</b></h6>
+                <h6>নাম : <b>{{ $product->name }}</b></h6>
+                <h6>বিক্রেতা - Vendor : <b>{{ $product->vendor->name }}</b></h6>
+                <h6>ব্র্যান্ড - Brand : <b>{{ $product->brand->name }}</b></h6>
             </div>
         </div>
 

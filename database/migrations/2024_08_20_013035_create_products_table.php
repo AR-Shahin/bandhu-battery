@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreignId("vendor_id");
             $table->string("name");
             $table->string("code")->nullable();
+            $table->boolean("status")->default(1);
             $table->integer("stock");
-            $table->text("description");
+            $table->text("description")->nullable();
             $table->foreignId("admin_id");
             $table->timestamps();
         });

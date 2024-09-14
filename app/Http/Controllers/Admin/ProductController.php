@@ -93,7 +93,7 @@ class ProductController extends Controller
                     "vendor_id" => $request->vendor_id,
                     "admin_id" => auth()->id(),
                     "code" => "-",
-                    "description" => $request->des
+                    "description" => $request->des ?? "-"
                 ]);
                 if($product)
                 {
@@ -177,7 +177,8 @@ class ProductController extends Controller
                 "name" => $request->name,
                 "vendor_id" => $request->vendor_id,
                 "admin_id" => auth()->id(),
-                "description" => $request->des
+                "description" => $request->des ?? "-",
+                "status" => $request->status,
             ])
         ){
             $this->updatedAlert();

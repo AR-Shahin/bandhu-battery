@@ -66,7 +66,12 @@
                              :value="$product->vendor_id"
                             />
                         </div>
-
+                        <div class="col-md-3 align-self-center">
+                            <div class="form-group">
+                                <label for="">Status</label>
+                                <input type="checkbox" value="1" @checked($product->status) name="status">
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <x-form.textarea label="Description" name="des" placeholder="-" :value="$product->description" id="des"  />
                         </div>
