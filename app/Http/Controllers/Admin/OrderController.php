@@ -7,9 +7,12 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\Sell;
+use App\Models\SellDetails;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use function PHPUnit\Framework\isNull;
 
 class OrderController extends Controller
 {
@@ -24,6 +27,7 @@ class OrderController extends Controller
                     $deleteRoute = route('admin.brands.destroy', $row["id"]);
                     $editRoute = route('admin.brands.update', $row["id"]);
                     $html = '';
+                    $html .= '<a class="btn btn-sm btn-info mr-1" href="'. route("admin.orders.edit",$row->id).'"><i class="fa fa-edit"></i></a>';
                     $html .= '<a class="btn btn-sm btn-success mr-1" href="'. route("admin.orders.view",$row->id).'"><i class="fa fa-eye"></i></a>';
                     return $html;
                 })
@@ -75,13 +79,13 @@ class OrderController extends Controller
                 $this->sell = $sell;
                 $total = 0;
                 foreach($request->products as $index => $value){
-                    $total += $request->quantites[$index] ?? 0;
+                    $total += $request->quantites[$index] ?? 1;
                     $product = Product::find($value);
-                    $product->update_stock($request->quantites[$index] ?? 0,ProductStock::REMOVE,"Order Placed to customer $customer->phone");
-                    $product->decrement("stock",$request->quantites[$index] ?? 0);
+                    $product->update_stock($request->quantites[$index] ?? 1,ProductStock::REMOVE,"Order Placed to customer $customer->phone");
+                    $product->decrement("stock",$request->quantites[$index] ?? 1);
                     $sell->details()->create([
                         "product_id" => $value,
-                        "quantity" => $request->quantites[$index] ?? 0
+                        "quantity" => $request->quantites[$index] ?? 1
                     ]);
                 }
                 $sell->update(["quantity" => $total]);
@@ -100,4 +104,68 @@ class OrderController extends Controller
             "sell" => $sell
         ]);
     }
+
+    function edit(Sell $sell) {
+        $productIds = $sell->details->pluck("product_id");
+        return view("admin.order.edit",[
+            "products" => Product::latest()->whereNotIn("id",$productIds)->get(["id","name","stock"]),
+            "customers" => Customer::latest()->get(["name","id"]),
+            "sell" => $sell->load(["details.product:id,name"])
+        ]);
+
+    }
+
+    function update(Request $request, Sell $sell)  {
+        try{
+            DB::transaction(function() use ($request,$sell) {
+                $customer = Customer::find($request->customer_id);
+                 $sell->update([
+                    "customer_id" => $request->customer_id,
+                    "remarks" => $request->remark ?? null,
+                    "admin_id" => auth()->id()
+                ]);
+                $this->sell = $sell ;
+                $total = $this->sell->quantity;
+
+              // dd($request->products, !is_null($request->products[0]));
+                if(count($request->products) > 0 && !is_null($request->products[0])){
+                    foreach($request->products as $index => $value){
+                        $total += $request->quantites[$index] ?? 1;
+                        $product = Product::find($value);
+                        $product->update_stock($request->quantites[$index] ?? 1,ProductStock::REMOVE,"Order Placed to customer $customer->phone");
+                        $product->decrement("stock",$request->quantites[$index] ?? 1);
+                        $sell->details()->create([
+                            "product_id" => $value,
+                            "quantity" => $request->quantites[$index] ?? 1
+                        ]);
+                    }
+                    $sell->update(["quantity" => $total]);
+                }
+            });
+            $this->successAlert("অর্ডার সফলভাবে আপডেট করা হয়েছে");
+            return back();
+        }catch(Exception $e){
+            $this->logError($e->getMessage());
+            dd($e->getMessage());
+        }
+    }
+
+    function deleteQuantity(SellDetails $sell) {
+        try{
+            DB::transaction(function() use($sell){
+                $product = Product::find($sell->product_id);
+                $customer = Customer::find($sell->order->customer_id);
+                $product->update_stock($sell->quantity,ProductStock::ADD,"গ্রাহক {$customer?->phone} ইনভয়েস থেকে পণ্য বাতিল করা হয়েছে।");
+                $product->increment("stock",$sell->quantity);
+                $sell->order->decrement("quantity",$sell->quantity);
+                $sell->delete();
+            });
+            $this->successAlert("অর্ডার সফলভাবে আপডেট করা হয়েছে");
+            return back();
+        }catch(Exception $e){
+            $this->logError($e->getMessage());
+            dd($e->getMessage());
+        }
+    }
+
 }

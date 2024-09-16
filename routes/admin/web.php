@@ -69,6 +69,10 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
         Route::get("create","create")->name("create");
         Route::post("store","store")->name("store");
         Route::get("view/{sell}","view")->name("view");
+        Route::get("edit/{sell}","edit")->name("edit");
+        Route::post("update/{sell}","update")->name("update");
+        Route::post("update-quantity/{sell}","updateQuantity")->name("update_quantity");
+        Route::post("delete-quantity/{sell}","deleteQuantity")->name("delete_quantity");
     });
 
     Route::get("shahin",[BackupController::class,"backupAndDownload"]);

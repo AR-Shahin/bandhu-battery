@@ -22,4 +22,7 @@ class SellDetails extends Model
     function product()  {
         return $this->belongsTo(Product::class);
     }
+    function order()  {
+        return $this->belongsTo(Sell::class,"sell_id");
+    }
 }
