@@ -36,7 +36,7 @@
                             <x-form.textarea rows="1" label="Remark" name="remark" placeholder="Remark" id="remark" />
                         </div>
                         <div class="col-md-3 align-self-center text-center">
-                            <button class="btn btn-sm btn-info">নতুন কাস্টমার যোগ করুন</button>
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#customerModal">নতুন কাস্টমার যোগ করুন</button>
                         </div>
                     </div>
                     <table class="table table-sm" id="orderTable">
@@ -66,7 +66,39 @@
         </div>
     </div>
 </div>
+<!-- The Modal -->
+<div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="customerModalLabel">Add New Customer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
+        <!-- Modal Body with Form -->
+        <form action="{{ route('admin.customers.store') }}" method="POST">
+        <div class="modal-body">
+            @csrf
+            <x-form.input label="Name" type="text" name="name" placeholder="Enter name" id="name"/>
+            <x-form.input label="Email" type="text" name="email" placeholder="Enter email" id="email"/>
+            <x-form.input label="Phone" type="text" name="phone" placeholder="Enter phone" id="phone"/>
+            <x-form.input label="Phone 2" type="text" name="phone_2" placeholder="Enter phone_2" id="phone_2"/>
+            <x-form.textarea label="Address" type="text" placeholder="Address" name="address" id="address"/>
+
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Customer</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
 @stop
 
 
