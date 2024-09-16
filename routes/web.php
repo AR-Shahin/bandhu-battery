@@ -13,6 +13,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    return redirect()->route("admin.dashboard");
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
