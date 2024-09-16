@@ -17,4 +17,9 @@ class SellDetails extends Model
             $model->id = Str::uuid();
         });
     }
+
+
+    function product()  {
+        return $this->belongsTo(Product::class);
+    }
 }

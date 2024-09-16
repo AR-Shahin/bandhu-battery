@@ -19,6 +19,7 @@ class OrderController extends Controller
             return $this->table($query)
                 ->addIndexColumn()
                 ->addColumn("name",fn($row) => "$row->bn_name - $row->en_name")
+                ->addColumn("created_at",fn($row) => $row->created_at->format('d-M-Y H:i:s'))
                 ->addColumn("actions",function($row) {
                     $deleteRoute = route('admin.brands.destroy', $row["id"]);
                     $editRoute = route('admin.brands.update', $row["id"]);
@@ -27,7 +28,7 @@ class OrderController extends Controller
                     return $html;
                 })
 
-                ->rawColumns(["actions","status","name"])
+                ->rawColumns(["actions","status","name","created_at"])
                 ->make(true);
         }
         return view("admin.order.index");
@@ -41,16 +42,29 @@ class OrderController extends Controller
     }
 
     public $sell;
+
+    private function getInvoiceID($oldSell){
+        if ($oldSell && !empty($oldSell->invoice_id)) {
+            $invParts = explode("_", $oldSell->invoice_id);
+            if (!empty($invParts)) {
+               return end($invParts) + 1;
+            }
+        }
+        return 1;
+    }
     function store(Request $request)  {
         $request->validate([
             "customer_id" => ["required"],
         ]);
 
+
         try{
-            $oldSell = Sell::latest()->first("id");
+            $oldSell = Sell::latest()->first("invoice_id",);
+
             DB::transaction(function() use ($request,$oldSell) {
-                $inv = $oldSell ? $oldSell->id + 1 : 1;
+                $inv = $this->getInvoiceID($oldSell);
                 $customer = Customer::find($request->customer_id);
+
                 $sell = Sell::create([
                     "customer_id" => $request->customer_id,
                     "remarks" => $request->remark ?? null,
@@ -72,7 +86,7 @@ class OrderController extends Controller
                 }
                 $sell->update(["quantity" => $total]);
             });
-
+            $this->successAlert("অর্ডার সফলভাবে করা হয়েছে");
             return redirect()->route("admin.orders.view",$this->sell->id);
         }catch(Exception $e){
             $this->logError($e->getMessage());
@@ -81,6 +95,9 @@ class OrderController extends Controller
     }
 
     function view(Sell $sell) {
-        return $sell->load("details");
+        $sell->load(["details.product:id,name","customer"]);
+        return view("admin.order.view",[
+            "sell" => $sell
+        ]);
     }
 }
