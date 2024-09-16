@@ -21,6 +21,24 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 border p-3">
+                    <h4>আজকের দিনের বিক্রি   </h4>
+                    <table class="table table-sm table-bordered text-center">
+                        <tr>
+                            <th>ক্রমিক</th>
+                            <th>পণ্যের নাম</th>
+                            <th>স্টক</th>
+                        </tr>
+                        @foreach ($waring_products as $product)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->stock }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                </div>
+                <div class="col-md-6 border p-3">
                     <h4>সীমিত স্টক পণ্য</h4>
                     <table class="table table-sm table-bordered text-center">
                         <tr>
@@ -40,6 +58,24 @@
                 </div>
                 <div class="col-md-6 border p-3">
                     <h4>বেশি বিক্রিত পণ্য </h4>
+                    <table class="table table-sm table-bordered text-center">
+                        <tr>
+                            <th>ক্রমিক</th>
+                            <th>পণ্যের নাম</th>
+                            <th>স্টক</th>
+                        </tr>
+                        @foreach ($waring_products as $product)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->stock }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                </div>
+                <div class="col-md-6 border p-3">
+                    <h4>টপ ক্রেতা  </h4>
                     <table class="table table-sm table-bordered text-center">
                         <tr>
                             <th>ক্রমিক</th>

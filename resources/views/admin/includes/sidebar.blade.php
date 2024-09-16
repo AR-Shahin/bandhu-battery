@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="{{ asset("admin/dist/img/AdminLTELogo.png") }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Admin Panel</span>
+      <span class="brand-text font-weight-light">অ্যাডমিন প্যানেল</span>
     </a>
 
     <!-- Sidebar -->
@@ -20,7 +20,7 @@
       <!-- SidebarSearch Form -->
       <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="অনুসন্ধান" aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-sidebar">
               <i class="fas fa-search fa-fw"></i>
@@ -37,7 +37,7 @@
             <a href="{{ route('admin.dashboard') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Dashboard
+                ড্যাশবোর্ড
               </p>
             </a>
           </li>
@@ -46,7 +46,7 @@
               <i class="nav-icon fas fa-sitemap"></i>
 
               <p>
-                Category
+                বিভাগ
               </p>
             </a>
           </li>
@@ -54,7 +54,7 @@
             <a href="{{ route('admin.brands.index') }}" class="nav-link">
               <i class="nav-icon fab fa-bandcamp"></i>
               <p>
-                Brand
+                ব্র্যান্ড
               </p>
             </a>
           </li>
@@ -63,7 +63,7 @@
             <a href="{{ route('admin.units.index') }}" class="nav-link">
               <i class="nav-icon fas fa-ring"></i>
               <p>
-                Unit
+                পরিমাপ
               </p>
             </a>
           </li>
@@ -71,7 +71,7 @@
             <a href="{{ route('admin.customers.index') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Customer
+                গ্রাহক
               </p>
             </a>
           </li>
@@ -79,15 +79,15 @@
             <a href="{{ route('admin.vendors.index') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Vendor
+                বিক্রেতা
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.products.index') }}" class="nav-link">
-              <i class=" nav-icon fas fa-car-battery"></i>
+              <i class="nav-icon fas fa-car-battery"></i>
               <p>
-                Product
+                পণ্য
               </p>
             </a>
           </li>
@@ -95,32 +95,29 @@
             <a href="{{ route('admin.orders.index') }}" class="nav-link">
               <i class="nav-icon fab fa-first-order"></i>
               <p>
-                Order
+                অর্ডার
               </p>
             </a>
           </li>
-          {{-- @php
-              dd($permissions);
-          @endphp --}}
+
           @if (in_array("simple-link",$permissions))
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
+                সাধারণ লিংক
+                <span class="right badge badge-danger">নতুন</span>
               </p>
             </a>
           </li>
           @endif
 
-
           <li class="nav-item">
             <a href="{{ url('log-viewer') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Log View
-                <span class="right badge badge-danger">New</span>
+                লগ ভিউ
+                <span class="right badge badge-danger">নতুন</span>
               </p>
             </a>
           </li>
@@ -129,7 +126,7 @@
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-solid fa-user-lock"></i>
               <p>
-                Security
+                সিকিউরিটি
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -137,13 +134,13 @@
               <li class="nav-item">
                 <a href="{{ route('admin.roles.index') }}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Role</p>
+                  <p>ভূমিকা</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('admin.permissions.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Permission</p>
+                  <p>অনুমতি</p>
                 </a>
               </li>
             </ul>
@@ -154,7 +151,7 @@
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Admin
+                অ্যাডমিন
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -162,19 +159,17 @@
               <li class="nav-item">
                 <a href="{{ route('admin.admins.index') }}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Admin</p>
+                  <p>অ্যাডমিন</p>
                 </a>
               </li>
-
             </ul>
           </li>
           @endif
           <li class="nav-item">
             <form action="{{ route("admin.logout") }}" method="POST">
                 @csrf
-                <button class="nav-link btn btn-sm btn-success text-light">Logout</button>
+                <button class="nav-link btn btn-sm btn-success text-light">লগআউট</button>
             </form>
-
           </li>
         </ul>
       </nav>
