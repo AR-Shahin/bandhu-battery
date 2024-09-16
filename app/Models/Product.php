@@ -39,7 +39,7 @@ class Product extends Model
             "stock" => $stock,
             "flag" => $flag,
             "remarks" => $remarks,
-            "admin_id" => auth()->id()
+            "admin_id" => auth()->id() ?? 1
         ]);
     }
 }
