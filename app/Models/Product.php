@@ -10,6 +10,9 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
 
+    function scopeIsActive($q)  {
+        $q->whereStatus(1);
+    }
     function category() {
         return $this->belongsTo(Category::class);
     }
