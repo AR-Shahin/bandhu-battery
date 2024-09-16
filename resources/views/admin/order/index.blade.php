@@ -1,10 +1,8 @@
 @extends("admin.layouts.master")
 
-@section("title","Order")
+@section("title","অর্ডার")
 
-@push(
-    "css"
-)
+@push("css")
 <x-utility.datatable-css/>
 @endpush
 
@@ -19,7 +17,7 @@
             @endphp
 
             <x-ui.card-top-add
-            heading="Manage Orders"
+            heading="অর্ডার ম্যানেজ করুন"
             permission="admin-create"
             :route="$route"
             :permissions="$permissions"
@@ -30,13 +28,13 @@
                     <table class="table table-sm table-bordered data-table">
                         <thead class="text-center">
                             <tr >
-                                <th class="text-center">Invoice No</th>
-                                <th class="text-center">Customer</th>
-                                <th class="text-center">Quantity</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Date</th>
-                                <th class="text-center">Placed By</th>
-                                <th class="text-center">Actions</th>
+                                <th class="text-center">ইনভয়েস নং</th>
+                                <th class="text-center">গ্রাহক</th>
+                                <th class="text-center">পরিমাণ</th>
+                                <th class="text-center">অবস্থা</th>
+                                <th class="text-center">তারিখ</th>
+                                <th class="text-center">অর্ডার নিয়েছে</th>
+                                <th class="text-center">অ্যাকশন</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -48,7 +46,6 @@
     </div>
 </div>
 @stop
-
 
 @push("script")
 

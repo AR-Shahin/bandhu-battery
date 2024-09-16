@@ -26,7 +26,7 @@
                     <div class="row gutters-1">
                         <div class="col-md-3">
                             <x-form.select
-                            label="Customer"
+                            label="গ্রাহক"
                             name="customer_id"
                             id="customer_id"
                             :items="$customers"
@@ -34,17 +34,17 @@
                             />
                         </div>
                         <div class="col-md-6">
-                            <x-form.textarea rows="1" label="Remark" name="remark" :value="$sell->remarks" id="remark" />
+                            <x-form.textarea rows="1" label="মন্তব্য" name="remark" :value="$sell->remarks" id="remark" />
                         </div>
                         <div class="col-md-2 align-self-center">
                             <div class="form-group">
-                                <label for="">Invoice ID</label>
+                                <label for="">ইনভয়েস নং</label>
                                 <input type="text" class="form-control" readonly value="{{ $sell->invoice_id }}">
                             </div>
                         </div>
                         <div class="col-md-1 align-self-center">
                             <div class="form-group">
-                                <label for="">Quantity</label>
+                                <label for="">পরিমাণ</label>
                                 <input type="text" class="form-control" readonly value="{{ $sell->quantity }}">
                             </div>
                         </div>
