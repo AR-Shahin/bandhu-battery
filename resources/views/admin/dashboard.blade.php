@@ -34,14 +34,16 @@
                     <table class="table table-sm table-bordered text-center">
                         <tr>
                             <th>ক্রমিক</th>
-                            <th>পণ্যের নাম</th>
+                            <th>ইনভয়েস নং</th>
                             <th>স্টক</th>
+                            <th>ইনভয়েস</th>
                         </tr>
                         @foreach ($today_sells as $sell)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $sell->invoice_id }}</td>
                                 <td>{{ $sell->quantity }}</td>
+                                <td><a href="{{ route('admin.orders.view',$sell->id) }}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i></a></td>
                             </tr>
                         @endforeach
                     </table>
