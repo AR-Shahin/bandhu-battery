@@ -132,7 +132,7 @@ class OrderController extends Controller
                     foreach($request->products as $index => $value){
                         $total += $request->quantites[$index] ?? 1;
                         $product = Product::find($value);
-                        $product->update_stock($request->quantites[$index] ?? 1,ProductStock::REMOVE,"Order Placed to customer $customer->phone");
+                        $product->update_stock($request->quantites[$index] ?? 1,ProductStock::REMOVE,"গ্রাহক {$customer->phone} এর ইনভয়েসে পণ্য যোগ করা হয়েছে।");
                         $product->decrement("stock",$request->quantites[$index] ?? 1);
                         $sell->details()->create([
                             "product_id" => $value,
@@ -167,5 +167,44 @@ class OrderController extends Controller
             dd($e->getMessage());
         }
     }
+    public function updateQuantity(Request $request, SellDetails $sell)
+    {
+        try {
+            DB::transaction(function() use ($sell, $request) {
+                $currentQuantity = $request->quantity;
+                $product = Product::find($sell->product_id);
+                $customer = Customer::find($sell->order->customer_id);
+
+                if ($currentQuantity == $sell->quantity) {
+                    return;
+                }
+
+                $quantityDifference = $currentQuantity - $sell->quantity;
+                $isIncreasing = $quantityDifference > 0;
+
+                if ($isIncreasing) {
+                    // Update stock for increased quantity
+                    $product->update_stock($quantityDifference, ProductStock::REMOVE, "গ্রাহক {$customer->phone} ইনভয়েস এড করা হয়েছে।");
+                    $product->decrement("stock", $quantityDifference);
+                    $sell->order->increment("quantity", $quantityDifference);
+                } else {
+                    // Update stock for decreased quantity
+                    $product->update_stock(-$quantityDifference, ProductStock::ADD, "গ্রাহক {$customer->phone} ইনভয়েস থেকে সরানো হয়েছে।");
+                    $product->increment("stock", -$quantityDifference);
+                    $sell->order->decrement("quantity", -$quantityDifference);
+                }
+
+                // Update sell quantity
+                $sell->update(["quantity" => $currentQuantity]);
+            });
+
+            $this->successAlert("অর্ডার সফলভাবে আপডেট করা হয়েছে");
+            return back();
+        } catch (Exception $e) {
+            $this->logError($e->getMessage());
+            dd($e->getMessage());
+        }
+    }
+
 
 }

@@ -54,7 +54,7 @@
                         <tr>
                             <td width="60%">
                                 <label for="">পণ্য</label>
-                                <select name="products[]" class="form-control select2">
+                                <select name="products[]" class="form-control select2 ">
                                     <option value="">Select</option>
                                     @foreach ($products as $product)
                                         <option value="{{ $product->id }}">{{ $product->name }} - ({{ $product->stock }})</option>
@@ -84,7 +84,8 @@
                     $total = 0
                      @endphp
                     @foreach ($sell->details as $item)
-                    <form action="" class="d-inline">
+                    <form action="{{ route('admin.orders.update_quantity',$item->id) }}" class="d-inline" method="POST">
+                        @csrf
                         @php
                             $total += $item->quantity
                         @endphp
@@ -96,7 +97,6 @@
                                 <input type="number" min="1" class="form-control form-control-sm" name="quantity" value="{{ $item->quantity }}">
                             </td>
                             <td width="20%" class="text-center">
-
                                     <button onclick="return confirm('Are you sure?')" class="btn btn-sm btn-success">আপডেট</button>
                                 </form>
                                 <form action="{{ route('admin.orders.delete_quantity',$item->id) }}" class="d-inline" method="POST">
@@ -120,42 +120,6 @@
 
 
 @push("script")
-
-{{-- <script>
-    $(document).ready(function () {
-    // Add new row
-    $(document).on('click', '.addNewRow', function (e) {
-        e.preventDefault();
-        var newRow = `
-            <tr>
-                <td width="60%">
-                    <label for="">পণ্য</label>
-                    <select name="products[]" class="form-control select2">
-                        <option value="">Select</option>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">{{ $product->name }}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td width="20%">
-                    <label for="">পরিমাণ</label>
-                    <input type="number" min="1" class="form-control" name="quantites[]">
-                </td>
-                <td width="20%" class="text-right">
-                    <button class="btn btn-sm btn-danger mt-4 removeRow"><i class="fa fa-minus"></i></button>
-                </td>
-            </tr>
-        `;
-        $('#orderTable').append(newRow); // Append the new row to the table
-    });
-
-    // Remove row
-    $(document).on('click', '.removeRow', function (e) {
-        e.preventDefault();
-        $(this).closest('tr').remove(); // Remove the closest tr (row) when clicking the remove button
-    });
-});
-</script> --}}
 
 <script>
     $(document).ready(function () {

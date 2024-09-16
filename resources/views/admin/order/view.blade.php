@@ -42,6 +42,7 @@
                 />
                 <hr>
                 <a href="javascript:void(0);" class="btn btn-sm btn-success mb-2" onclick="printDiv()"><i class="fa fa-print"></i> প্রিন্ট</a>
+                <a href="{{ route('admin.orders.edit',$sell->id) }}" class="btn btn-sm btn-info mb-2" ><i class="fa fa-edit"></i> আপডেট</a>
 
                 <!-- Wrap the section you want to print in a div -->
                 <div id="printableArea">
