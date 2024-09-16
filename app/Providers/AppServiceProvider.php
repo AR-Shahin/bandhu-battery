@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\WebsiteInfo;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View as FacadesView;
 use Illuminate\View\View;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
         FacadesView::composer("*",function (View $view) {
             $view->with("website",once(fn() => WebsiteInfo::first()));
         });
+
+        Paginator::useBootstrapFive();
 
     }
 }

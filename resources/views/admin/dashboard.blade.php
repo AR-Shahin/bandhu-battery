@@ -1,7 +1,15 @@
 @extends("admin.layouts.master")
 
 @section("title","Dashboard")
-
+@push('css')
+    <style>
+        .chart_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    </style>
+@endpush
 @section("master_content")
 <div style="overflow: hidden">
     <div class="card">
@@ -17,6 +25,7 @@
             </form>
         </div>
     </div>
+
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -28,14 +37,15 @@
                             <th>পণ্যের নাম</th>
                             <th>স্টক</th>
                         </tr>
-                        @foreach ($waring_products as $product)
+                        @foreach ($today_sells as $sell)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->stock }}</td>
+                                <td>{{ $sell->invoice_id }}</td>
+                                <td>{{ $sell->quantity }}</td>
                             </tr>
                         @endforeach
                     </table>
+                    {{ $today_sells->links() }}
 
                 </div>
                 <div class="col-md-6 border p-3">
@@ -46,7 +56,7 @@
                             <th>পণ্যের নাম</th>
                             <th>স্টক</th>
                         </tr>
-                        @foreach ($waring_products as $product)
+                        @foreach ($warning_products as $product)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $product->name }}</td>
@@ -94,7 +104,7 @@
                     </table>
 
                 </div>
-                <div class="col-md-6 align-self-center border p-3">
+                <div class="col-md-6 text-center align-self-center border p-3 chart_container">
                     <div id="chart"></div>
                 </div>
                 <div class="col-md-6 border p-3 ">
@@ -112,15 +122,23 @@
 @push("script")
     <script>
         var options = {
-          series: [44, 55, 13, 43, 22],
+          series: @json($products["stocks"]),
           chart: {
           width: 380,
           type: 'pie',
         },
+        title: {
+        text: 'পণ্যের স্টকের বন্টন',  // Add your chart title here
+        align: 'center',                     // Alignment of the title
+        style: {
+        fontSize: '16px',                  // Style for the title (size, color, etc.)
+        fontWeight: 'bold'
+        }
+    },
         legend: {
     show: false // This disables the legend
   },
-        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        labels: @json($products["names"]),
         responsive: [{
           breakpoint: 480,
           options: {
