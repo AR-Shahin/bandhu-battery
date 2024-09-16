@@ -46,7 +46,7 @@
               <i class="nav-icon fas fa-sitemap"></i>
 
               <p>
-                বিভাগ
+                ক্যাটাগরি
               </p>
             </a>
           </li>

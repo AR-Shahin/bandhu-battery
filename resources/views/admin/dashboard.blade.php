@@ -62,31 +62,33 @@
                         <tr>
                             <th>ক্রমিক</th>
                             <th>পণ্যের নাম</th>
-                            <th>স্টক</th>
+                            <th>বর্তমান স্টক</th>
+                            <th>টোটাল ইনভয়েস</th>
                         </tr>
-                        @foreach ($waring_products as $product)
+                        @foreach ($top_products as $product)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->stock }}</td>
+                                <td>{{ $product->sells_count }}</td>
                             </tr>
                         @endforeach
                     </table>
 
                 </div>
                 <div class="col-md-6 border p-3">
-                    <h4>টপ ক্রেতা  </h4>
+                    <h4>টপ গ্রাহক  </h4>
                     <table class="table table-sm table-bordered text-center">
                         <tr>
                             <th>ক্রমিক</th>
-                            <th>পণ্যের নাম</th>
-                            <th>স্টক</th>
+                            <th>গ্রাহকের নাম</th>
+                            <th>টোটাল ইনভয়েস  </th>
                         </tr>
-                        @foreach ($waring_products as $product)
+                        @foreach ($top_customers as $customer)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->stock }}</td>
+                                <td>{{ $customer->name }}</td>
+                                <td>{{ $customer->sells_count }}</td>
                             </tr>
                         @endforeach
                     </table>

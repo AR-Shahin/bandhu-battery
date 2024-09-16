@@ -35,7 +35,7 @@ class Product extends Model
     }
 
     function sells()  {
-        return $this->hasMany(Sell::class);
+        return $this->hasMany(SellDetails::class);
     }
     function update_stock($stock,$flag,$remarks) {
         $this->stock_history()->create([
