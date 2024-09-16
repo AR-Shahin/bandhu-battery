@@ -35,8 +35,8 @@ class OrderController extends Controller
 
     function create() {
         return view("admin.order.create",[
-            "products" => Product::latest()->get(),
-            "customers" => Customer::latest()->get()
+            "products" => Product::latest()->get(["id","name","stock"]),
+            "customers" => Customer::latest()->get(["name","id"])
         ]);
     }
 

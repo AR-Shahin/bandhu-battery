@@ -46,7 +46,7 @@
                                 <select name="products[]" class="form-control select2">
                                     <option value="">Select</option>
                                     @foreach ($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                        <option value="{{ $product->id }}">{{ $product->name }} - ({{ $product->stock }})</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -157,7 +157,7 @@ $(document).on('click', '.addNewRow', function (e) {
                 <select name="products[]" class="form-control select2">
                     <option value="">Select</option>
                     @foreach ($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                        <option value="{{ $product->id }}">{{ $product->name }} - ({{ $product->stock }})</option>
                     @endforeach
                 </select>
             </td>
