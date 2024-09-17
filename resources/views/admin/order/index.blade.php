@@ -12,6 +12,34 @@
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-body">
+                <form action="" id="filterForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="">Customer</label>
+                            <select name="customer" id="customer" class="form-control select2">
+                                <option value="">Select an Item</option>
+                                @foreach ($customers as $customer)
+                                    <option value="{{ $customer->id }}">{{ $customer->name }} ({{ $customer->phone }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Date Range : </label> <br>
+                                <input type="hidden" name="from_date" id="from_date" value="{{ request("from_date") }}">
+                                <input type="hidden" name="to_date" id="to_date"  value="{{ request("to_date") }}">
+                                <input type="text" class="form-control w-100" name="daterange" value="{{ request('daterange') }}" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 align-self-center">
+                            <button class="btn btn-sm btn-success mt-4">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
                 @php
                 $route = route("admin.orders.create");
             @endphp
@@ -55,12 +83,20 @@
 
 initalizeDatatable("{{ route('admin.orders.index') }}",[
             {data: 'invoice_id', name: 'invoice_id'},
-            {data: 'customer.name', name: 'customer'},
+            {data: 'customer.name', name: 'customer.name'},
             {data: 'quantity', name: 'quantity'},
             {data: 'status', name: 'status'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'admin.name', name: 'admin'},
+            {data: 'admin.name', name: 'admin.name'},
             {data: 'actions', name: 'actions'},
         ]);
 </script>
+
+@push('script')
+    <script>
+        $("#customer").on("change",function(){
+            $("#filterForm").submit()
+        });
+    </script>
+@endpush
 @endpush

@@ -35,7 +35,9 @@ class OrderController extends Controller
                 ->rawColumns(["actions","status","name","created_at"])
                 ->make(true);
         }
-        return view("admin.order.index");
+        return view("admin.order.index",[
+            "customers" => Customer::get(["name","id","phone"])
+        ]);
     }
 
     function create() {
