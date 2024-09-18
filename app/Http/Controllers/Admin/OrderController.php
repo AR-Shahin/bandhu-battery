@@ -11,14 +11,20 @@ use App\Models\SellDetails;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use function PHPUnit\Framework\isNull;
+use App\QueryFilters\{DateRangeFilter, CommonFilter};
+use Illuminate\Pipeline\Pipeline;
 
 class OrderController extends Controller
 {
     function index(Request $request) {
         if($request->ajax()){
             $query = Sell::query()->with(["customer","admin"])->latest();
+            $query = app(Pipeline::class)
+            ->send($query)
+            ->through([
+                new CommonFilter("customer_id","customer"),
+                new DateRangeFilter($request->from_date,$request->to_date)
+            ])->thenReturn();
             return $this->table($query)
                 ->addIndexColumn()
                 ->addColumn("name",fn($row) => "$row->bn_name - $row->en_name")

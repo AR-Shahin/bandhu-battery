@@ -12,14 +12,14 @@
     <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="" id="filterForm">
+                <form action="{{ route('admin.orders.index') }}" id="filterForm">
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Customer</label>
                             <select name="customer" id="customer" class="form-control select2">
                                 <option value="">Select an Item</option>
                                 @foreach ($customers as $customer)
-                                    <option value="{{ $customer->id }}">{{ $customer->name }} ({{ $customer->phone }})</option>
+                                    <option value="{{ $customer->id }}" @selected($customer->id == request("customer"))>{{ $customer->name }} ({{ $customer->phone }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -33,6 +33,7 @@
                         </div>
                         <div class="col-md-3 align-self-center">
                             <button class="btn btn-sm btn-success mt-4">Search</button>
+                            <a class="btn btn-sm btn-info mt-4" href="{{ route('admin.orders.index') }}">Reset</a>
                         </div>
                     </div>
                 </form>
@@ -81,7 +82,7 @@
 
 <script>
 
-initalizeDatatable("{{ route('admin.orders.index') }}",[
+initFilterDataTable("{{ route('admin.orders.index') }}",[
             {data: 'invoice_id', name: 'invoice_id'},
             {data: 'customer.name', name: 'customer.name'},
             {data: 'quantity', name: 'quantity'},
@@ -89,7 +90,13 @@ initalizeDatatable("{{ route('admin.orders.index') }}",[
             {data: 'created_at', name: 'created_at'},
             {data: 'admin.name', name: 'admin.name'},
             {data: 'actions', name: 'actions'},
-        ]);
+        ],
+        {
+            customer : $("#customer").val(),
+            from_date : $("#from_date").val(),
+            to_date : $("#to_date").val(),
+        }
+        );
 </script>
 
 @push('script')
