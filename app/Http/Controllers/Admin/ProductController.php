@@ -14,7 +14,8 @@ use App\Models\Vendor;
 use App\Repositories\BaseCRUDRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
-
+use App\QueryFilters\{ CommonFilter};
+use Illuminate\Pipeline\Pipeline;
 class ProductController extends Controller
 {
     private $repository;
@@ -29,8 +30,15 @@ class ProductController extends Controller
     function index(Request $request, Category $category)  {
 
         if($request->ajax()){
-
-            return $this->table($this->repository->query(["category","brand","unit","vendor"]))
+            $query = $this->repository->query(["category","brand","unit","vendor"]);
+            $query = app(Pipeline::class)
+                ->send($query)
+                ->through([
+                    new CommonFilter("brand_id","brand"),
+                    new CommonFilter("unit_id","unit"),
+                    new CommonFilter("vendor_id","vendor"),
+                ])->thenReturn();
+            return $this->table($query)
                 ->addIndexColumn()
                 ->addColumn("stock",function($row){
                     if($row->stock < 10){
@@ -53,7 +61,11 @@ class ProductController extends Controller
                 ->rawColumns(["actions","status","stock"])
                 ->make(true);
         }
-        return view("admin.product.index");
+        return view("admin.product.index",[
+            "brands" => Brand::latest()->get(),
+            "units" => Unit::latest()->get(),
+            "vendors" => Vendor::latest()->get(["id","name"]),
+        ]);
     }
 
     function destroy($product) {

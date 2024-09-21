@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Category extends Model
 {
     use HasFactory,StatusAttribute,SlugMutator;
-
+    protected $appends = ["name"];
     protected $guarded = [];
 
     function parent()  {

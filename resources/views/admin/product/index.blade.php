@@ -12,6 +12,11 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-12">
+        <x-filter.product-filter
+         :brands="$brands"
+         :units="$units"
+         :vendors="$vendors"
+         />
         <div class="card">
             <div class="card-body">
                 @php
@@ -57,7 +62,7 @@
 
 <script>
 
-initalizeDatatable("{{ route('admin.products.index') }}",[
+initFilterDataTable("{{ route('admin.products.index') }}",[
             {data: 'name', name: 'name'},
             {data: 'code', name: 'code'},
             {data: 'stock', name: 'stock'},
@@ -66,6 +71,12 @@ initalizeDatatable("{{ route('admin.products.index') }}",[
             {data: 'unit.bn_name.', name: 'unit.bn_name'},
             {data: 'vendor.name.', name: 'vendor.name'},
             {data: 'actions', name: 'actions'},
-        ]);
+        ],
+        {
+            vendor : $("#vendor").val(),
+            unit : $("#unit").val(),
+            brand : $("#brand").val(),
+        }
+        );
 </script>
 @endpush
