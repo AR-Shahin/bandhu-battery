@@ -61,10 +61,10 @@ initalizeDatatable("{{ route('admin.products.index') }}",[
             {data: 'name', name: 'name'},
             {data: 'code', name: 'code'},
             {data: 'stock', name: 'stock'},
-            {data: 'category.bn_name.', name: 'category'},
-            {data: 'brand.bn_name.', name: 'brand'},
-            {data: 'unit.bn_name.', name: 'unit'},
-            {data: 'vendor.name.', name: 'vendor'},
+            {data: 'category.bn_name.', name: 'category.bn_name'},
+            {data: 'brand.bn_name.', name: 'brand.bn_name'},
+            {data: 'unit.bn_name.', name: 'unit.bn_name'},
+            {data: 'vendor.name.', name: 'vendor.name'},
             {data: 'actions', name: 'actions'},
         ]);
 </script>
