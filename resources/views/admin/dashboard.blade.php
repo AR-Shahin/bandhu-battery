@@ -30,7 +30,11 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 border p-3">
-                    <h4>আজকের দিনের বিক্রি   </h4>
+
+                    <div class="d-flex">
+                        <h4>আজকের দিনের বিক্রি </h4>
+         
+                    </div>
                     <table class="table table-sm table-bordered text-center">
                         <tr>
                             <th>ক্রমিক</th>

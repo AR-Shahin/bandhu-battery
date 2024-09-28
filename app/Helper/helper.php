@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 
 
-function database_backup(Helper $helper)
+function database_backup(Helper $helper,$is_download = true)
 {
-
+try{
     $backupDir = storage_path('backups');
     if (!is_dir($backupDir)) {
         mkdir($backupDir, 0777, true);
@@ -61,7 +61,12 @@ function database_backup(Helper $helper)
 
     fclose($file);
 
-    return response()->download($backupFile);
+    if($is_download){
+        return response()->download($backupFile);
+    }
+}catch(Exception $e){
+    dd($e->getMessage());
+}
 }
 
 
