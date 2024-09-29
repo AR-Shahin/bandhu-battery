@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 function database_backup(Helper $helper,$is_download = true)
 {
 try{
+    Log::info("Backup Start.");
     $backupDir = storage_path('backups');
     if (!is_dir($backupDir)) {
         mkdir($backupDir, 0777, true);
