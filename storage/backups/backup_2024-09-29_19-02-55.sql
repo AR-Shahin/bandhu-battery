@@ -197,7 +197,7 @@ CREATE TABLE `product_stocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO product_stocks VALUES ('1', '1', '94', 'add', 'When Product added!', '1', '2024-09-16 08:44:44', '2024-09-16 08:44:44');
 INSERT INTO product_stocks VALUES ('2', '2', '63', 'add', 'When Product added!', '1', '2024-09-16 08:44:44', '2024-09-16 08:44:44');
@@ -223,6 +223,10 @@ INSERT INTO product_stocks VALUES ('21', '2', '2', 'remove', 'গ্রাহক
 INSERT INTO product_stocks VALUES ('22', '2', '2', 'add', 'গ্রাহক 01711111111 ইনভয়েস থেকে সরানো হয়েছে।', '1', '2024-09-16 09:03:50', '2024-09-16 09:03:50');
 INSERT INTO product_stocks VALUES ('23', '1', '1', 'remove', 'Order Placed to customer 01711111111', '1', '2024-09-16 09:27:01', '2024-09-16 09:27:01');
 INSERT INTO product_stocks VALUES ('24', '6', '99', 'remove', 'Order Placed to customer 01733333333', '1', '2024-09-16 20:49:50', '2024-09-16 20:49:50');
+INSERT INTO product_stocks VALUES ('25', '1', '95', 'remove', 'Order Placed to customer +1 (699) 196-6671', '1', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
+INSERT INTO product_stocks VALUES ('26', '4', '34', 'remove', 'Order Placed to customer +1 (699) 196-6671', '1', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
+INSERT INTO product_stocks VALUES ('27', '2', '15', 'remove', 'Order Placed to customer +1 (699) 196-6671', '1', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
+INSERT INTO product_stocks VALUES ('28', '5', '45', 'remove', 'Order Placed to customer +1 (699) 196-6671', '1', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
 
 CREATE TABLE `products` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -241,11 +245,11 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO products VALUES ('1', '1', '1', '1', '1', 'হামকো ব্যাটারি', 'PN-1', '1', '88', 'হামকো ব্যাটারি পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 09:27:01');
-INSERT INTO products VALUES ('2', '1', '1', '1', '1', 'সোলার প্যানেল', 'PN-2', '1', '62', 'সোলার প্যানেল পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 09:03:50');
+INSERT INTO products VALUES ('1', '1', '1', '1', '1', 'হামকো ব্যাটারি', 'PN-1', '1', '-7', 'হামকো ব্যাটারি পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-22 20:51:49');
+INSERT INTO products VALUES ('2', '1', '1', '1', '1', 'সোলার প্যানেল', 'PN-2', '1', '47', 'সোলার প্যানেল পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-22 20:51:49');
 INSERT INTO products VALUES ('3', '1', '1', '1', '1', 'ল্যাপটপ', 'PN-3', '1', '21', 'ল্যাপটপ পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 08:44:44');
-INSERT INTO products VALUES ('4', '1', '1', '1', '1', 'মোবাইল ফোন', 'PN-4', '1', '34', 'মোবাইল ফোন পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 08:44:44');
-INSERT INTO products VALUES ('5', '1', '1', '1', '1', 'ক্যামেরা', 'PN-5', '1', '87', 'ক্যামেরা পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 08:44:44');
+INSERT INTO products VALUES ('4', '1', '1', '1', '1', 'মোবাইল ফোন', 'PN-4', '1', '0', 'মোবাইল ফোন পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-22 20:51:49');
+INSERT INTO products VALUES ('5', '1', '1', '1', '1', 'ক্যামেরা', 'PN-5', '1', '42', 'ক্যামেরা পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-22 20:51:49');
 INSERT INTO products VALUES ('6', '1', '1', '1', '1', 'ইনভার্টার', 'PN-6', '1', '-13', 'ইনভার্টার পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 20:49:50');
 INSERT INTO products VALUES ('7', '1', '1', '1', '1', 'টিভি', 'PN-7', '1', '41', 'টিভি পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 08:52:41');
 INSERT INTO products VALUES ('8', '1', '1', '1', '1', 'ফ্রিজ', 'PN-8', '1', '10', 'ফ্রিজ পণ্যের বিবরণ', '1', '2024-09-16 08:44:44', '2024-09-16 08:44:44');
@@ -305,10 +309,14 @@ CREATE TABLE `sell_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO sell_details VALUES ('1b0ca9ea-81c1-4a55-83ca-94b58a78da8e', '02bc3831-386d-40c3-a563-524c746e8f88', '2', '1', '2024-09-16 09:01:26', '2024-09-16 09:03:50');
+INSERT INTO sell_details VALUES ('1f77cade-ba5a-4e2c-8773-b263748765c5', '26c0f124-b7f3-444a-a444-6a238a11508b', '1', '95', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
 INSERT INTO sell_details VALUES ('2000ee83-d833-4ff8-85c4-5771d134191c', 'a1697ecf-c165-4087-a8b7-11ab6cb06313', '6', '99', '2024-09-16 20:49:50', '2024-09-16 20:49:50');
+INSERT INTO sell_details VALUES ('2b289bf6-d506-4c41-837b-19896ceded98', '26c0f124-b7f3-444a-a444-6a238a11508b', '5', '45', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
 INSERT INTO sell_details VALUES ('2e149248-566f-4fe4-910c-174e95a6cad8', '02bc3831-386d-40c3-a563-524c746e8f88', '1', '5', '2024-09-16 08:45:39', '2024-09-16 08:58:34');
+INSERT INTO sell_details VALUES ('3c95cfb5-e9f4-4c51-991b-0badef396d05', '26c0f124-b7f3-444a-a444-6a238a11508b', '4', '34', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
 INSERT INTO sell_details VALUES ('99572d8c-b846-4025-bc6a-e6b4b48eb2e5', '02bc3831-386d-40c3-a563-524c746e8f88', '7', '6', '2024-09-16 08:45:39', '2024-09-16 08:52:41');
 INSERT INTO sell_details VALUES ('9c09cdfe-7bc5-4b7a-b1f9-baa4fc1c3a64', 'e45a0de9-b60e-47c1-9a43-71225b80f48b', '1', '1', '2024-09-16 09:27:01', '2024-09-16 09:27:01');
+INSERT INTO sell_details VALUES ('9de3c752-4990-4ccd-aef6-95af0872dccf', '26c0f124-b7f3-444a-a444-6a238a11508b', '2', '15', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
 
 CREATE TABLE `sells` (
   `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -324,6 +332,7 @@ CREATE TABLE `sells` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO sells VALUES ('02bc3831-386d-40c3-a563-524c746e8f88', '1', '1', 'INV_1', '12', 'placed', 'Amet corrupti quia', '2024-09-16 08:45:39', '2024-09-16 09:03:50');
+INSERT INTO sells VALUES ('26c0f124-b7f3-444a-a444-6a238a11508b', '5', '1', 'INV_4', '189', 'placed', 'Corporis omnis non d', '2024-09-22 20:51:49', '2024-09-22 20:51:49');
 INSERT INTO sells VALUES ('a1697ecf-c165-4087-a8b7-11ab6cb06313', '3', '1', 'INV_3', '99', 'placed', 'Est impedit praese', '2024-09-16 20:49:50', '2024-09-16 20:49:50');
 INSERT INTO sells VALUES ('e45a0de9-b60e-47c1-9a43-71225b80f48b', '1', '1', 'INV_2', '1', 'placed', 'kjh', '2024-09-12 09:27:01', '2024-09-16 09:27:01');
 
@@ -339,8 +348,10 @@ CREATE TABLE `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO sessions VALUES ('GXMP6S0ICuTYFKOtOt4QPFHD1kWsFnkeETqvkTzu', '1', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoib0xpeTBudmo0QnRsQU9oRFlGVGEyMnFZMDNXa3ZHaUw4czVEQVRMdCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', '1727614972');
+INSERT INTO sessions VALUES ('LbU7c6PqeK4xnIdtXInyELVmUByPBgeN9XiGSXhw', '1', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicFV3bHhqYVJRb0toalZvRURDc21KNU1yM2NkSjRHVUdFeFo0a21sZyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', '1727534187');
 INSERT INTO sessions VALUES ('Lx5kPXTyU1gjaaFr4efVJPE8v1OUUbzlz25Mwlu3', '1', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiWEVwa2lCSkFkNXZmZkRHeGdrVnVydGdFaEUwcjI5WVd3dTJlNHgxMCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM3OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vZGFzaGJvYXJkIjt9fQ==', '1726932349');
-INSERT INTO sessions VALUES ('QfsNyDDMGbw9qo7ap6Vf0OQteKs2lW7GBkN0XpJo', NULL, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoieUZGd2RJdDZDQUJOT3lubHlzUUk0V0E5VWhmcEgxZnliSU5jUGlyMCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', '1727015430');
+INSERT INTO sessions VALUES ('zRg8HkfGsBakknW9lj7f6xwQDuTPJI52O6qpDeYU', '1', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVDJjeWJUMGQ1SnM4QmNlZktPc1VOYXFXMDRXemwzaWE1bzJqSlBweSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQzOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vcHJvZHVjdC9zdG9jay8yIjt9fQ==', '1727018823');
 
 CREATE TABLE `units` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,

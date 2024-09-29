@@ -65,6 +65,7 @@ try{
         return response()->download($backupFile);
     }
 }catch(Exception $e){
+    Log::log($e->getMessage());
     dd($e->getMessage());
 }
 }
