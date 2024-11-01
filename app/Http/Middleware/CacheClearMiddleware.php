@@ -19,8 +19,7 @@ class CacheClearMiddleware
     {
         Artisan::call('optimize:clear');
         $res =  $next($request);
-        Log::info("hi");
         return $res;
     }
-  
+
 }

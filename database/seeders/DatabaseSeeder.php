@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         Admin::create([
             "name" => "Super Admin",
             "email" => "admin@mail.com",
-            "password" => bcrypt("password")
+            "password" => bcrypt("0000")
         ]);
 
 
@@ -46,12 +46,12 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 PermissionSeeder::class,
                 RolePermissionSeeder::class,
-                CategorySeeder::class,
-                BrandSeeder::class,
-                UnitSeeder::class,
-                VendorSeeder::class,
-                CustomerSeeder::class,
-                ProductSeeder::class
+                // CategorySeeder::class,
+                // BrandSeeder::class,
+                // UnitSeeder::class,
+                // VendorSeeder::class,
+                // CustomerSeeder::class,
+                // ProductSeeder::class
             ]);
         }
 }
