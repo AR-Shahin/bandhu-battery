@@ -28,7 +28,8 @@ class UnitController extends Controller
                 ->addColumn("actions",function($row) {
                     $deleteRoute = route('admin.units.destroy', $row["id"]);
                     $editRoute = route('admin.units.update', $row["id"]);
-                    $html = $this->generateEditButton($row,$editRoute) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
+                    $html = $this->generateEditButton($row,$editRoute);
+                    //  .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
                     return $html;
                 })
 

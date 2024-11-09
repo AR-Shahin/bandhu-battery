@@ -28,7 +28,8 @@ class VendorController extends Controller
                 ->addColumn("actions",function($row) {
                     $deleteRoute = route('admin.vendors.destroy', $row["id"]);
                     $editRoute = route('admin.vendors.update', $row["id"]);
-                    $html = $this->generateEditButton($row,$editRoute) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
+                    $html = $this->generateEditButton($row,$editRoute);
+                    //  .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
                     return $html;
                 })
 

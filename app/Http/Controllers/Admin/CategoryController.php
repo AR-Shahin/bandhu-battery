@@ -30,7 +30,8 @@ class CategoryController extends Controller
                 ->addColumn("actions",function($row) use ($categories){
                     $deleteRoute = route('admin.categories.destroy', $row["id"]);
                     $editRoute = route('admin.categories.update', $row["id"]);
-                    $html = $this->generateCategoryEditButton($row,$editRoute,$categories) .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
+                    $html = $this->generateCategoryEditButton($row,$editRoute,$categories);
+                    //  .  $this->generateDeleteButton($row,$deleteRoute,"admin-delete","DELETE");
                     return $html;
                 })
 
@@ -67,7 +68,7 @@ class CategoryController extends Controller
     }
 
     function update(Request $request,$id) {
-        
+
         // $request->validate([
         //     "bn_name" => ["required","unique:$this->table,bn_name"],
         //     "en_name" => ["required","unique:$this->table,en_name"],
