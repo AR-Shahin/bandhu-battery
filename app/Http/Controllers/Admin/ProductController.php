@@ -93,6 +93,7 @@ class ProductController extends Controller
             "unit_id" => ["required"],
             "name" => ["required","unique:products,name"],
             "stock" => ["nullable"],
+            "code" => ["nullable", "sometimes", "unique:products,code"]
         ]);
         try{
             DB::transaction(function () use($request){
@@ -110,7 +111,7 @@ class ProductController extends Controller
                 if($product)
                 {
                     $product->update([
-                        "code" => "PN-{$product->id}"
+                        "code" => $request->code
                     ]);
                     $product->update_stock(
                         $request->stock ?? 0,
@@ -188,6 +189,7 @@ class ProductController extends Controller
                 "unit_id" => $request->unit_id,
                 "name" => $request->name,
                 "vendor_id" => $request->vendor_id,
+                "code" => $request->code,
                 "admin_id" => auth()->id(),
                 "description" => $request->des ?? "-",
                 "status" => $request->status,
