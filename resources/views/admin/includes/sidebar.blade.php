@@ -2,7 +2,8 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="{{ asset("admin/dist/img/AdminLTELogo.png") }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">অ্যাডমিন প্যানেল</span>
+      <span class="brand-text font-weight-light">বন্ধু ব্যাটারি
+    </span>
     </a>
 
     <!-- Sidebar -->
@@ -17,17 +18,7 @@
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="অনুসন্ধান" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -121,7 +112,7 @@
               </p>
             </a>
           </li>
-          @if (in_array("role-create",$permissions))
+          @if (0)
           <li class="nav-item menu--open">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-solid fa-user-lock"></i>
@@ -146,7 +137,7 @@
             </ul>
           </li>
           @endif
-          @if (in_array("admin-create",$permissions))
+          @if (0)
           <li class="nav-item menu--open">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-users"></i>
