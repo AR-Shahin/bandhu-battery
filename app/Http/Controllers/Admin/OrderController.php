@@ -11,7 +11,7 @@ use App\Models\SellDetails;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\QueryFilters\{DateRangeFilter, CommonFilter};
+use App\QueryFilters\{DateRangeFilter, CommonFilter, SellProductFilter};
 use Illuminate\Pipeline\Pipeline;
 
 class OrderController extends Controller
@@ -23,12 +23,13 @@ class OrderController extends Controller
             ->send($query)
             ->through([
                 new CommonFilter("customer_id","customer"),
-                new DateRangeFilter($request->from_date,$request->to_date)
+                new DateRangeFilter($request->from_date,$request->to_date),
+                new SellProductFilter($request->product)
             ])->thenReturn();
             return $this->table($query)
                 ->addIndexColumn()
                 ->addColumn("name",fn($row) => "$row->bn_name - $row->en_name")
-                ->addColumn("created_at",fn($row) => $row->created_at->format('d-M-Y H:i:s'))
+                ->addColumn("created_at",fn($row) => $row->created_at->format('d-M-Y h:i:s'))
                 ->addColumn("actions",function($row) {
                     $deleteRoute = route('admin.brands.destroy', $row["id"]);
                     $editRoute = route('admin.brands.update', $row["id"]);
@@ -42,7 +43,8 @@ class OrderController extends Controller
                 ->make(true);
         }
         return view("admin.order.index",[
-            "customers" => Customer::get(["name","id","phone"])
+            "customers" => Customer::get(["name","id","phone"]),
+            "codes" => Product::latest()->get(["id","code","name"])
         ]);
     }
 

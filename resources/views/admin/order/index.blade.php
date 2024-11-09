@@ -24,6 +24,15 @@
                             </select>
                         </div>
                         <div class="col-md-3">
+                            <label for="">Product Code</label>
+                            <select name="product" id="code" class="form-control select2">
+                                <option value="">Select an Item</option>
+                                @foreach ($codes as $code)
+                                    <option value="{{ $code->id }}" @selected($code->id == request("product"))>({{ $code->code ?? '-' }}) - {{ $code->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Date Range : </label> <br>
                                 <input type="hidden" name="from_date" id="from_date" value="{{ request("from_date") }}">
@@ -95,13 +104,14 @@ initFilterDataTable("{{ route('admin.orders.index') }}",[
             customer : $("#customer").val(),
             from_date : $("#from_date").val(),
             to_date : $("#to_date").val(),
+            product : $("#code").val(),
         }
         );
 </script>
 
 @push('script')
     <script>
-        $("#customer").on("change",function(){
+        $("#customer,#code").on("change",function(){
             $("#filterForm").submit()
         });
     </script>

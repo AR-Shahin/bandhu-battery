@@ -87,7 +87,7 @@
                                 </tr>
                                 <tr>
                                     <th>অর্ডারের তারিখ</th>
-                                    <td class="text-center">{{ $sell->created_at->format("d-M-Y H:i:s") }}</td>
+                                    <td class="text-center">{{ $sell->created_at->format("d-M-Y h:i:s") }}</td>
                                 </tr>
                                 <tr>
                                     <th>পরিমাণ</th>
