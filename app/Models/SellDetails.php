@@ -18,7 +18,10 @@ class SellDetails extends Model
         });
     }
 
-
+    public function formattedCodes()
+    {
+        return $this->product_codes . "---";
+    }
     function product()  {
         return $this->belongsTo(Product::class);
     }

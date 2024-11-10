@@ -7,17 +7,24 @@ use Illuminate\Support\Facades\Log;
 
 class SellProductFilter
 {
-    function __construct( protected $productId)
+    public function __construct(protected $code)
     {
+    
     }
 
-    public function handle($builder,Closure $next)
+    public function handle($builder, Closure $next)
     {
-        if($this->productId){
+        if ($this->code) {
             return $builder->whereHas('details', function ($query) {
-                $query->where('product_id', $this->productId);
+                $query->where(function ($query) {
+                    $query->where('product_codes', $this->code)
+                          ->orWhere('product_codes', 'LIKE', "{$this->code},%")
+                          ->orWhere('product_codes', 'LIKE', "%,{$this->code},%")
+                          ->orWhere('product_codes', 'LIKE', "%,{$this->code}");
+                });
             });
         }
+
         return $next($builder);
     }
 }

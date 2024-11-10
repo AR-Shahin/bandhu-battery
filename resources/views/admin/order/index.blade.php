@@ -25,10 +25,10 @@
                         </div>
                         <div class="col-md-3">
                             <label for="">Product Code</label>
-                            <select name="product" id="code" class="form-control select2">
+                            <select name="code" id="code" class="form-control select2">
                                 <option value="">Select an Item</option>
                                 @foreach ($codes as $code)
-                                    <option value="{{ $code->id }}" @selected($code->id == request("product"))>({{ $code->code ?? '-' }}) - {{ $code->name }}</option>
+                                    <option value="{{ $code }}" @selected($code == request("code"))>{{ $code }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -104,7 +104,7 @@ initFilterDataTable("{{ route('admin.orders.index') }}",[
             customer : $("#customer").val(),
             from_date : $("#from_date").val(),
             to_date : $("#to_date").val(),
-            product : $("#code").val(),
+            code : $("#code").val(),
         }
         );
 </script>

@@ -17,6 +17,7 @@ use Illuminate\Pipeline\Pipeline;
 class OrderController extends Controller
 {
     function index(Request $request) {
+
         if($request->ajax()){
             $query = Sell::query()->with(["customer","admin"])->latest();
             $query = app(Pipeline::class)
@@ -24,7 +25,7 @@ class OrderController extends Controller
             ->through([
                 new CommonFilter("customer_id","customer"),
                 new DateRangeFilter($request->from_date,$request->to_date),
-                new SellProductFilter($request->product)
+                new SellProductFilter($request->code)
             ])->thenReturn();
             return $this->table($query)
                 ->addIndexColumn()
@@ -44,7 +45,21 @@ class OrderController extends Controller
         }
         return view("admin.order.index",[
             "customers" => Customer::get(["name","id","phone"]),
-            "codes" => Product::latest()->get(["id","code","name"])
+            "codes" =>  SellDetails::whereNotNull("product_codes")
+                    ->pluck("product_codes")
+                    ->flatMap(function ($item) {
+                        return explode(",", $item);
+                    })
+                    ->unique()
+                    ->sort()
+                    ->groupBy(function ($code) {
+                        return strtoupper(substr($code, 0, 1));
+                    })
+                    ->sortKeys()
+                    ->flatMap(function ($group) {
+                        return $group->sort()->values();
+                    })
+                    ->toArray()
         ]);
     }
 
@@ -71,7 +86,7 @@ class OrderController extends Controller
             "customer_id" => ["required"],
         ]);
 
-
+        //return $request;
         try{
             $oldSell = Sell::latest()->first("invoice_id",);
 
@@ -95,7 +110,8 @@ class OrderController extends Controller
                     $product->decrement("stock",$request->quantites[$index] ?? 1);
                     $sell->details()->create([
                         "product_id" => $value,
-                        "quantity" => $request->quantites[$index] ?? 1
+                        "quantity" => $request->quantites[$index] ?? 1,
+                        "product_codes" => $request->product_codes[$index] ?? null
                     ]);
                 }
                 $sell->update(["quantity" => $total]);
@@ -146,7 +162,8 @@ class OrderController extends Controller
                         $product->decrement("stock",$request->quantites[$index] ?? 1);
                         $sell->details()->create([
                             "product_id" => $value,
-                            "quantity" => $request->quantites[$index] ?? 1
+                            "quantity" => $request->quantites[$index] ?? 1,
+                            "product_codes" => $request->product_codes[$index] ?? null
                         ]);
                     }
                     $sell->update(["quantity" => $total]);
@@ -205,7 +222,7 @@ class OrderController extends Controller
                 }
 
                 // Update sell quantity
-                $sell->update(["quantity" => $currentQuantity]);
+                $sell->update(["quantity" => $currentQuantity,"product_codes" => $request->product_codes]);
             });
 
             $this->successAlert("অর্ডার সফলভাবে আপডেট করা হয়েছে");

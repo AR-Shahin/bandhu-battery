@@ -41,7 +41,7 @@
                     </div>
                     <table class="table table-sm" id="orderTable">
                         <tr>
-                            <td width="60%">
+                            <td width="20%">
                                 <label for="">পণ্য</label>
                                 <select name="products[]" class="form-control select2">
                                     <option value="">Select</option>
@@ -53,6 +53,10 @@
                             <td width="20%">
                                 <label for="">পরিমাণ</label>
                                 <input type="number" min="1" class="form-control" name="quantites[]">
+                            </td>
+                            <td width="50%">
+                                <label for="">কোড</label>
+                                <textarea class="form-control" name="product_codes[]" id="" cols="30" rows="1"></textarea>
                             </td>
                             <td width="20%" class="text-right">
                                 <button class="btn btn-sm btn-success mt-4 addNewRow"><i class="fa fa-plus"></i></button>
@@ -184,7 +188,7 @@ $(document).on('click', '.addNewRow', function (e) {
 
     var newRow = `
         <tr>
-            <td width="60%">
+            <td width="20%">
                 <label for="">পণ্য</label>
                 <select name="products[]" class="form-control select2">
                     <option value="">Select</option>
@@ -196,6 +200,10 @@ $(document).on('click', '.addNewRow', function (e) {
             <td width="20%">
                 <label for="">পরিমাণ</label>
                 <input type="number" min="1" class="form-control" name="quantites[]">
+            </td>
+            <td width="50%">
+                <label for="">কোড</label>
+                <textarea class="form-control" name="product_codes[]" id="" cols="30" rows="1"></textarea>
             </td>
             <td width="20%" class="text-right">
                 <button class="btn btn-sm btn-danger mt-4 removeRow"><i class="fa fa-minus"></i></button>

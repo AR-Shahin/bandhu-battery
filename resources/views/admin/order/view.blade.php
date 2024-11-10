@@ -113,6 +113,7 @@
                                     <th>ক্রমিক</th>
                                     <th>পণ্যের নাম</th>
                                     <th>পরিমাণ</th>
+                                    <th>কোড</th>
                                 </tr>
 
                                 @foreach ($sell->details as $item)
@@ -120,6 +121,7 @@
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->product_codes }}</td>
                                     </tr>
                                 @endforeach
                             </table>
