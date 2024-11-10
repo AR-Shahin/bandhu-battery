@@ -197,6 +197,7 @@ class OrderController extends Controller
     public function updateQuantity(Request $request, SellDetails $sell)
     {
         try {
+            $temp = $sell;
             DB::transaction(function() use ($sell, $request) {
                 $currentQuantity = $request->quantity;
                 $product = Product::find($sell->product_id);
@@ -222,9 +223,11 @@ class OrderController extends Controller
                 }
 
                 // Update sell quantity
-                $sell->update(["quantity" => $currentQuantity,"product_codes" => $request->product_codes]);
+                $sell->update(["quantity" => $currentQuantity]);
             });
 
+            $temp->update(["product_codes" => $request->product_codes]);
+            
             $this->successAlert("অর্ডার সফলভাবে আপডেট করা হয়েছে");
             return back();
         } catch (Exception $e) {
