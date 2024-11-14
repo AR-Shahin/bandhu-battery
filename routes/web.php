@@ -1,10 +1,13 @@
 <?php
 
+use App\Models\Admin;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Admin\Auth\Foo;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Models\Admin;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 Route::get('/', function () {
     // $admin =  Admin::first();
@@ -30,3 +33,24 @@ Route::view("ars","admin.layouts.app")->name("ars");
 
 
 Route::get('bal',[LoginController::class,"create"]);
+
+Route::get("drive", function () {
+    // Increase memory limit
+    ini_set('memory_limit', '512M');
+
+    // Define the specific folder ID
+    $folderId = '1tCXXKEhuDoBya2rCVORbH1Y8QsrHrWB1';
+
+    // Path where the file should be stored
+    $filePath = $folderId . "/ars.png"; // The file will be stored inside the folder with ID 1tCXXKEhuDoBya2rCVORbH1Y8QsrHrWB1
+
+    // Get the file content
+    $file = storage_path("app/asa.png");
+    $fileData = File::get($file);
+
+    // Upload the file to Google Drive inside the specified folder
+    Storage::disk('google')->put($filePath, $fileData);
+
+    return response()->json(['status' => 'File uploaded successfully']);
+});
+
