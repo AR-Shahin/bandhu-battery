@@ -110,3 +110,54 @@ function database_backup_with_file(Helper $helper) {
     }
 
 }
+
+
+function convert_eng_to_bn_number($number)
+{
+    $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    $banglaNumbers = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+
+    return str_replace($englishNumbers, $banglaNumbers, $number);
+}
+
+
+function convertNumberToBanglaWords($number)
+{
+    $banglaNumbers = [
+        0 => 'শূন্য', 1 => 'এক', 2 => 'দুই', 3 => 'তিন', 4 => 'চার',
+        5 => 'পাঁচ', 6 => 'ছয়', 7 => 'সাত', 8 => 'আট', 9 => 'নয়',
+        10 => 'দশ', 11 => 'এগারো', 12 => 'বারো', 13 => 'তেরো', 14 => 'চৌদ্দ',
+        15 => 'পনেরো', 16 => 'ষোলো', 17 => 'সতেরো', 18 => 'আঠারো', 19 => 'উনিশ',
+        20 => 'বিশ', 30 => 'ত্রিশ', 40 => 'চল্লিশ', 50 => 'পঞ্চাশ',
+        60 => 'ষাট', 70 => 'সত্তর', 80 => 'আশি', 90 => 'নব্বই'
+    ];
+
+    $units = [
+        100 => 'শত', 1000 => 'হাজার', 100000 => 'লক্ষ', 10000000 => 'কোটি'
+    ];
+
+    if ($number < 21) {
+        return $banglaNumbers[$number];
+    } elseif ($number < 100) {
+        $tens = (int)($number / 10) * 10;
+        $remainder = $number % 10;
+        return $banglaNumbers[$tens] . ($remainder ? ' ' . $banglaNumbers[$remainder] : '');
+    } elseif ($number < 1000) {
+        $hundreds = (int)($number / 100);
+        $remainder = $number % 100;
+        return $banglaNumbers[$hundreds] . ' ' . $units[100] . ($remainder ? ' ' . convertNumberToBanglaWords($remainder) : '');
+    } elseif ($number < 100000) {
+        $thousands = (int)($number / 1000);
+        $remainder = $number % 1000;
+        return convertNumberToBanglaWords($thousands) . ' ' . $units[1000] . ($remainder ? ' ' . convertNumberToBanglaWords($remainder) : '');
+    } elseif ($number < 10000000) {
+        $lakhs = (int)($number / 100000);
+        $remainder = $number % 100000;
+        return convertNumberToBanglaWords($lakhs) . ' ' . $units[100000] . ($remainder ? ' ' . convertNumberToBanglaWords($remainder) : '');
+    } else {
+        $crores = (int)($number / 10000000);
+        $remainder = $number % 10000000;
+        return convertNumberToBanglaWords($crores) . ' ' . $units[10000000] . ($remainder ? ' ' . convertNumberToBanglaWords($remainder) : '');
+    }
+}
+

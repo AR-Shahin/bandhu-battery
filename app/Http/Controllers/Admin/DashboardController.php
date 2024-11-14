@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sell;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
@@ -35,6 +36,8 @@ class DashboardController extends Controller
             "products" => [
                 "names" => array_keys($products),
                 "stocks" => array_values($products),
+               # "totalAmountOfMoney" => convert_eng_to_bn_number(number_format(Product::sum(DB::raw('stock * price')),2))
+                "totalAmountOfMoney" => Product::sum(DB::raw('stock * price'))
             ]
         ]);
     }

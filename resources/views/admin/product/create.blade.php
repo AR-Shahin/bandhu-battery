@@ -30,6 +30,9 @@
                         <div class="col-md-3">
                             <x-form.input label="Stock" type="number" name="stock" placeholder="Enter stock" id="stock"/>
                         </div>
+                        <div class="col-md-3">
+                            <x-form.input label="Price" type="number" name="price" placeholder="Enter price" id="price"/>
+                        </div>
                         <div class="col-md-6">
                             <x-form.input label="Code" type="text" name="code" placeholder="Enter Code" id="code"/>
                         </div>

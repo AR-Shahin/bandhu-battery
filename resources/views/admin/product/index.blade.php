@@ -38,6 +38,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Code</th>
                                 <th class="text-center">Stock</th>
+                                <th class="text-center">Price</th>
                                 <th class="text-center">Category</th>
                                 <th class="text-center">Brand</th>
                                 <th class="text-center">Unit</th>
@@ -66,6 +67,7 @@ initFilterDataTable("{{ route('admin.products.index') }}",[
             {data: 'name', name: 'name'},
             {data: 'code', name: 'code'},
             {data: 'stock', name: 'stock'},
+            {data: 'price', name: 'price'},
             {data: 'category.bn_name.', name: 'category.bn_name'},
             {data: 'brand.bn_name.', name: 'brand.bn_name'},
             {data: 'unit.bn_name.', name: 'unit.bn_name'},

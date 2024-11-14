@@ -28,6 +28,9 @@
                         <div class="col-md-9">
                             <x-form.input label="Name" type="text" name="name" :value="$product->name" id="name"/>
                         </div>
+                        <div class="col-md-3">
+                            <x-form.input label="Price" type="number" name="price" :value="$product->price" id="price"/>
+                        </div>
                         <div class="col-md-6">
                             <x-form.input label="Code" type="text" name="code" :value="$product->code" id="code"/>
                         </div>
