@@ -9,6 +9,8 @@ use App\Helper\Trait\Helper;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 
+use Rakibhstu\Banglanumber\NumberToBangla;
+
 
 function database_backup(Helper $helper,$is_download = true)
 {
@@ -161,3 +163,7 @@ function convertNumberToBanglaWords($number)
     }
 }
 
+function bn_to_en($num)  {
+    $numto = new NumberToBangla();
+    return $numto->bnWord($num);
+}

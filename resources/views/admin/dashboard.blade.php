@@ -16,7 +16,7 @@
             <div class="small-box bg-dark" bis_skin_checked="1">
                <div class="inner" bis_skin_checked="1">
                   <h4>{{ convert_eng_to_bn_number($products['totalAmountOfMoney']) }} TK</h4>
-                  <p>{{ convertNumberToBanglaWords($products['totalAmountOfMoney'])}} টাকা</p>
+                  <p>{{ bn_to_en($products['totalAmountOfMoney'])}} টাকা</p>
                </div>
                <div class="icon" bis_skin_checked="1">
                   <i class="ion ion-bag"></i>
