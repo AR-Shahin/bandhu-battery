@@ -4,7 +4,7 @@
 <div class="login-page">
     <div class="login-box">
        <div class="login-logo">
-          <a href="/">{{$website->name}}</a>
+          <a href="/">বন্ধু ব্যাটারি</a>
        </div>
        <!-- /.login-logo -->
        <div class="card">
