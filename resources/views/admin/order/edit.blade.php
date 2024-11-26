@@ -183,7 +183,6 @@ $(document).on('click', '.addNewRow', function (e) {
     var newRow = `
         <tr>
             <td width="20%">
-                <label for="">পণ্য</label>
                 <select name="products[]" class="form-control select2">
                     <option value="">Select</option>
                     @foreach ($products as $product)
@@ -192,15 +191,12 @@ $(document).on('click', '.addNewRow', function (e) {
                 </select>
             </td>
             <td width="20%">
-                <label for="">পরিমাণ</label>
                 <input type="number" min="1" class="form-control" name="quantites[]">
             </td>
               <td width="20%">
-                                <label for="">তারিখ</label>
                                 <input type="date" value="{{ date("Y-m-d") }}"  class="form-control" name="dates[]">
                             </td>
                 <td width="50%">
-                <label for="">কোড</label>
                 <textarea class="form-control" name="product_codes[]" id="" cols="30" rows="1"></textarea>
             </td>
             <td width="20%" class="text-right">
