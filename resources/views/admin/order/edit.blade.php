@@ -65,6 +65,10 @@
                                 <label for="">পরিমাণ</label>
                                 <input type="number" min="1" class="form-control" name="quantites[]">
                             </td>
+                            <td width="20%">
+                                <label for="">তারিখ</label>
+                                <input type="date" value="{{ date("Y-m-d") }}"   class="form-control" name="dates[]">
+                            </td>
                             <td width="50%">
                                 <label for="">কোড</label>
                                 <textarea class="form-control" name="product_codes[]" id="" cols="30" rows="1"></textarea>
@@ -82,6 +86,7 @@
                     <tr>
                         <th>পণ্য</th>
                         <th>পরিমাণ</th>
+                        <th>তারিখ</th>
                         <th>কোড</th>
                         <th>আপডেট/ ডিলিট  </th>
                     </tr>
@@ -89,6 +94,7 @@
                     $total = 0
                      @endphp
                     @foreach ($sell->details as $item)
+
                     <form action="{{ route('admin.orders.update_quantity',$item->id) }}" class="d-inline" method="POST">
                         @csrf
                         @php
@@ -100,6 +106,9 @@
                             </td>
                             <td width="20%">
                                 <input type="number" min="1" class="form-control form-control-sm" name="quantity" value="{{ $item->quantity }}">
+                            </td>
+                            <td width="20%">
+                                <input type="date"  class="form-control form-control-sm" name="date" value="{{ $item->date?->format('Y-m-d') }}">
                             </td>
                             <td width="50%">
                                 <textarea class="form-control" name="product_codes" id="" cols="30" rows="1">{{ $item->product_codes }}</textarea>
@@ -186,6 +195,10 @@ $(document).on('click', '.addNewRow', function (e) {
                 <label for="">পরিমাণ</label>
                 <input type="number" min="1" class="form-control" name="quantites[]">
             </td>
+              <td width="20%">
+                                <label for="">তারিখ</label>
+                                <input type="date" value="{{ date("Y-m-d") }}"  class="form-control" name="dates[]">
+                            </td>
                 <td width="50%">
                 <label for="">কোড</label>
                 <textarea class="form-control" name="product_codes[]" id="" cols="30" rows="1"></textarea>

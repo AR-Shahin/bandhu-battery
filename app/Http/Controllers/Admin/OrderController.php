@@ -111,7 +111,8 @@ class OrderController extends Controller
                     $sell->details()->create([
                         "product_id" => $value,
                         "quantity" => $request->quantites[$index] ?? 1,
-                        "product_codes" => $request->product_codes[$index] ?? null
+                        "product_codes" => $request->product_codes[$index] ?? null,
+                        "date" => $request->dates[$index] ?? null
                     ]);
                 }
                 $sell->update(["quantity" => $total]);
@@ -163,7 +164,8 @@ class OrderController extends Controller
                         $sell->details()->create([
                             "product_id" => $value,
                             "quantity" => $request->quantites[$index] ?? 1,
-                            "product_codes" => $request->product_codes[$index] ?? null
+                            "product_codes" => $request->product_codes[$index] ?? null,
+                            "date" => $request->dates[$index] ?? null
                         ]);
                     }
                     $sell->update(["quantity" => $total]);
@@ -222,12 +224,13 @@ class OrderController extends Controller
                     $sell->order->decrement("quantity", -$quantityDifference);
                 }
 
+
                 // Update sell quantity
                 $sell->update(["quantity" => $currentQuantity]);
             });
 
-            $temp->update(["product_codes" => $request->product_codes]);
-            
+            $temp->update(["product_codes" => $request->product_codes,"date" => $request->date]);
+
             $this->successAlert("অর্ডার সফলভাবে আপডেট করা হয়েছে");
             return back();
         } catch (Exception $e) {

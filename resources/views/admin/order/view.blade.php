@@ -113,6 +113,7 @@
                                     <th>ক্রমিক</th>
                                     <th>পণ্যের নাম</th>
                                     <th>পরিমাণ</th>
+                                    <th>তারিখ</th>
                                     <th>কোড</th>
                                 </tr>
 
@@ -121,6 +122,7 @@
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->date->format("Y-m-d") }}</td>
                                         <td>{{ $item->product_codes }}</td>
                                     </tr>
                                 @endforeach
