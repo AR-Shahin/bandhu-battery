@@ -19,7 +19,7 @@ class OrderController extends Controller
     function index(Request $request) {
 
         if($request->ajax()){
-            $query = Sell::query()->with(["customer","admin"])->latest();
+            $query = Sell::query()->with(["customer","admin"])->latest("updated_at");
             $query = app(Pipeline::class)
             ->send($query)
             ->through([
