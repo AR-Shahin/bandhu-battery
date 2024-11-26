@@ -122,7 +122,7 @@
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->date->format("Y-m-d") }}</td>
+                                        <td>{{ $item?->date?->format("Y-m-d") }}</td>
                                         <td>{{ $item->product_codes }}</td>
                                     </tr>
                                 @endforeach
