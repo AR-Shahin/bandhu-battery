@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Admin\Auth\Foo;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 Route::get('/', function () {
@@ -54,3 +56,19 @@ Route::get("drive", function () {
     return response()->json(['status' => 'File uploaded successfully']);
 });
 
+
+
+
+Route::get("mail",function(){
+    try{
+        $details = [
+            'subject' => 'Test Email',
+            'message' => 'This is a test email sent using Laravel and cPanel custom domain email.'
+        ];
+
+        Mail::to('mdshahinmije96@gmail.om')->send(new TestMail($details));
+    }catch(Exception $e){
+        dd($e->getMessage());
+    }
+
+});
