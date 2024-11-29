@@ -39,7 +39,37 @@
                             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#customerModal">নতুন কাস্টমার যোগ করুন</button>
                         </div>
                     </div>
-                    <table class="table table-sm" id="orderTable">
+                    <div id="orderTable">
+                        <div class="row no-gutterns my-1">
+                            <div class="col-md-3">
+                                <label for="">পণ্য</label>
+                                <select name="products[]" class="form-control select2">
+                                    <option value="">Select</option>
+                                    @foreach ($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->name }} - ({{ $product->stock }})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="">পরিমাণ</label>
+                                <input type="number" min="1" class="form-control" name="quantites[]">
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="">তারিখ</label>
+                                <input type="date" value="{{ date('Y-m-d') }}" class="form-control" name="dates[]">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">কোড</label>
+                                <textarea class="form-control" name="product_codes[]" id="" cols="30" rows="1"></textarea>
+                            </div>
+                            <div class="col-md-1 text-right ">
+                                <button class="btn btn-sm btn-success mt-4 addNewRow"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <table class="table table-sm" id="orderTable">
                         <tr>
                             <td width="20%">
                                 <label for="">পণ্য</label>
@@ -66,7 +96,7 @@
                                 <button class="btn btn-sm btn-success mt-4 addNewRow"><i class="fa fa-plus"></i></button>
                             </td>
                         </tr>
-                    </table>
+                    </table> --}}
                     <x-form.submit/>
 
                 </form>
@@ -178,14 +208,40 @@ $(document).on('click', '.addNewRow', function (e) {
             </td>
         </tr>
     `;
-    $('#orderTable').append(newRow); // Append the new row to the table
+    var row = `
+           <div class="row no-gutterns mb-1">
+                            <div class="col-md-3">
+                                <select name="products[]" class="form-control select2">
+                                    <option value="">Select</option>
+                                    @foreach ($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->name }} - ({{ $product->stock }})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" min="1" class="form-control" name="quantites[]">
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="date" value="{{ date('Y-m-d') }}" class="form-control" name="dates[]">
+                            </div>
+                            <div class="col-md-4">
+                                <textarea class="form-control" name="product_codes[]" id="" cols="30" rows="1"></textarea>
+                            </div>
+                            <div class="col-md-1 text-right ">
+                            <button class="btn btn-sm btn-danger mt-4 removeRow"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+    `;
+    $('#orderTable').append(row); // Append the new row to the table
     updateProductOptions(); // Update the options when a new row is added
 });
 
 // Remove row
 $(document).on('click', '.removeRow', function (e) {
     e.preventDefault();
-    $(this).closest('tr').remove(); // Remove the closest tr (row)
+
+    $(this).parent().parent().remove(); // Remove the closest tr (row)
     updateProductOptions(); // Update the options after removing a row
 });
 

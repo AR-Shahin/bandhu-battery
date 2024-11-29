@@ -66,7 +66,7 @@ Route::get("mail",function(){
             'message' => 'This is a test email sent using Laravel and cPanel custom domain email.'
         ];
 
-        Mail::to('mdshahinmije96@gmail.om')->send(new TestMail($details));
+        Mail::to('mdshahinmije96@gmail.com')->send(new TestMail($details));
     }catch(Exception $e){
         dd($e->getMessage());
     }
