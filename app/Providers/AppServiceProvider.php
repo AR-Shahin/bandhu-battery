@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\WebsiteInfo;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View as FacadesView;
 use Illuminate\View\View;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        DB::prohibitDestructiveCommands(
+            $this->app->isProduction()
+        );
         FacadesView::composer("admin/*",function(View $view){
             if(auth("admin")->user()){
                 $view->with("permissions",auth("admin")->user()->getAllPermissions()->pluck("name")->toArray());
