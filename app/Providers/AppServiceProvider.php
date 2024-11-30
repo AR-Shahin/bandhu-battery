@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        DB::prohibitDestructiveCommands(
-            $this->app->isProduction()
-        );
+        // DB::prohibitDestructiveCommands(
+        //     $this->app->isProduction()
+        // );
         FacadesView::composer("admin/*",function(View $view){
             if(auth("admin")->user()){
                 $view->with("permissions",auth("admin")->user()->getAllPermissions()->pluck("name")->toArray());
