@@ -30,10 +30,9 @@
 <div class="card">
    <div class="card-body text-center">
       <a href="{{ route('admin.orders.create') }}" class="btn btn-sm btn-primary">অর্ডার করুন </a>
-      <form action="{{ route("admin.backup") }}" method="POST" class="d-inline-block mx-2 mb-2">
-      @csrf
-      <button class="btn btn-sm btn-success"><i class="fas fa-trash-restore-alt mr-1"></i> Backup Site Data</button>
-      </form>
+
+      <a href="{{ route('backup_drive') }}" class="mt-2 btn btn-sm btn-success d-inline-block mx-2 mb-2"><i class="fas fa-trash-restore-alt mr-1"></i> Backup in Drive</a>
+
       <form action="{{ route("admin.backup_db") }}" method="POST" class="d-inline ">
       @csrf
       <button class="btn btn-sm btn-info"><i class="fas fa-trash-restore-alt mr-1"></i> Database Backup Only</button>

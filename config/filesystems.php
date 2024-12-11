@@ -55,14 +55,6 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
-
-        'google' => [
-            'driver' => 'google',
-            'client_id' => env('GOOGLE_DRIVE_CLIENT_ID',"51183909018-tf8thkodjqn1b8bgaom4as7c9lcnifnp.apps.googleusercontent.com"),
-            'client_secret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
-            'refresh_token' => env('GOOGLE_DRIVE_REFRESH_TOKEN',null),
-            'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID', null), // Optional folder to store the files
-        ],
         'google' => [
             'driver' => 'google',
             'clientId' => env('GOOGLE_DRIVE_CLIENT_ID'),

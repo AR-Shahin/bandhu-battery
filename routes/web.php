@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\Auth\Foo;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Mail\TestMail;
+use Google\Service\NetworkManagement\RerunConnectivityTestRequest;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
@@ -37,27 +39,20 @@ Route::view("ars","admin.layouts.app")->name("ars");
 Route::get('bal',[LoginController::class,"create"]);
 
 Route::get("drive", function () {
-    // Increase memory limit
-    ini_set('memory_limit', '512M');
 
-    // Define the specific folder ID
-    $folderId = '1tCXXKEhuDoBya2rCVORbH1Y8QsrHrWB1';
 
-    // Path where the file should be stored
-    $filePath = $folderId . "/ars.png"; // The file will be stored inside the folder with ID 1tCXXKEhuDoBya2rCVORbH1Y8QsrHrWB1
 
-    // Get the file content
-    $file = storage_path("app/asa.png");
-    $fileData = File::get($file);
-
-    // Upload the file to Google Drive inside the specified folder
-    Storage::disk('google')->put($filePath, $fileData);
-
-    return response()->json(['status' => 'File uploaded successfully']);
+    $contents = Gdrive::all('/shop',false);
+    dd($contents);
 });
 
 
+Route::get("backup-drive", function () {
 
+    Artisan::call("db_backup_in_drive");
+    session()->flash("success","Backup in drive");
+    return back();
+})->name("backup_drive");
 
 Route::get("mail",function(){
     try{

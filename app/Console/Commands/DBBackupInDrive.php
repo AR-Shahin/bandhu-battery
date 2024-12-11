@@ -4,9 +4,12 @@ namespace App\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use App\Helper\File\File as FileFile;
+use Illuminate\Support\Facades\Storage;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class DBBackupInDrive extends Command
 {
@@ -34,11 +37,6 @@ class DBBackupInDrive extends Command
     public function __construct()
     {
         parent::__construct();
-
-        // Set up Google API credentials (ensure these values are stored in your config or env)
-        $this->clientId = env("GOOGLE_DRIVE_CLIENT_ID");
-        $this->clientSecret = env("GOOGLE_DRIVE_CLIENT_SECRET");
-        $this->refreshToken = env("GOOGLE_DRIVE_REFRESH_TOKEN");
     }
 
     /**
@@ -47,29 +45,19 @@ class DBBackupInDrive extends Command
     public function handle()
     {
         try {
-            // Step 1: Perform the database backup
-            $this->backupDatabase();
 
-            // Step 2: Prepare file for uploading to Google Drive
-            $sqlFiles = File::glob(storage_path('backups') . "/*.sql");
-            if (count($sqlFiles)) {
-                $sqlFile = $sqlFiles[0]; // Get the first SQL file
-                $fileName = basename($sqlFile);
+            $path = $this->backupDatabase();
+            Log::info("DB Backup End.......");
+            $this->info('Database backup completed.');
+            $file = file_get_contents($path);
+            Gdrive::deleteDir('shop');
+            Log::info("Backup directory delete");
+            Gdrive::makeDir('shop');
+            Storage::disk("google")->put("shop/backup.sql",$file);
 
-                // Step 3: Specify the Google Drive folder ID
-                $folderId = "1xat6U4zx7Ijy19NtgfjeNYeui9N7iO7K"; // Your Google Drive folder ID
+            Log::info("DB Backup in Drive.......");
 
-                // Step 4: Upload the file to Google Drive
-                $this->info("Uploading $fileName to Google Drive...");
-                $response = $this->uploadFileToGoogleDrive($sqlFile, $fileName, $folderId);
-
-                // Log the file path or response
-                $this->info('File uploaded successfully: ' . json_encode($response));
-            } else {
-                $this->error('No SQL backup files found to upload.');
-            }
         } catch (Exception $e) {
-            // Step 5: Catch and log any errors
             Log::error("DB Backup Error in Drive: " . $e->getMessage());
             $this->error("Error: " . $e->getMessage());
         }
@@ -80,10 +68,9 @@ class DBBackupInDrive extends Command
      */
     private function backupDatabase()
     {
-        // You can call your existing database_backup logic or implement it here
         $this->info('Backing up the database...');
-        database_backup(new \App\Helper\Trait\Helper, false);
-        $this->info('Database backup completed.');
+        Log::info("DB Backup Start.......");
+        return database_backup(new \App\Helper\Trait\Helper, false);
     }
 
     /**
