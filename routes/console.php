@@ -12,6 +12,8 @@ Artisan::command('inspire', function () {
 
 // Schedule::call(new DBBackupInDrive)->everySecond();
 
-Schedule::command("db_backup_in_drive")->everySecond();
+Schedule::command("db_backup_in_drive")->daily();
 
-#php /home2/bandhuba/shop.bandhubattery.com/artisan schedule:run >> /dev/null 2>&1
+
+#/opt/cpanel/ea-php82/root/usr/bin/php /home2/bandhuba/shop.bandhubattery.com/artisan schedule:run >> /dev/null 2>&1
+
