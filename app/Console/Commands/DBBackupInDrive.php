@@ -47,15 +47,16 @@ class DBBackupInDrive extends Command
         try {
 
             $path = $this->backupDatabase();
-            Log::info("DB Backup End.......");
+            Log::info("DB generated in the storage.");
             $this->info('Database backup completed.');
             $file = file_get_contents($path);
             Gdrive::deleteDir('shop');
             Log::info("Backup directory delete");
             Gdrive::makeDir('shop');
+            Log::info("Backup directory create");
             Storage::disk("google")->put("shop/backup.sql",$file);
 
-            Log::info("DB Backup in Drive.......");
+            Log::info("DB Successfully Backup in Drive.......");
 
         } catch (Exception $e) {
             Log::error("DB Backup Error in Drive: " . $e->getMessage());
