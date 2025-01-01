@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Customer;
-use App\Models\Product;
+use Carbon\Carbon;
 use App\Models\Sell;
+use App\Models\Product;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -38,7 +39,10 @@ class DashboardController extends Controller
                 "stocks" => array_values($products),
                # "totalAmountOfMoney" => convert_eng_to_bn_number(number_format(Product::sum(DB::raw('stock * price')),2))
                 "totalAmountOfMoney" => Product::sum(DB::raw('stock * price'))
-            ]
+            ],
+            "currentMonthSell" => Sell::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->sum('quantity')
         ]);
     }
 }

@@ -27,6 +27,11 @@
          </div>
 
     </div>
+    <div class="card">
+        <div class="card-body">
+            <h5>এই মাসের সেল : <span class="text-success">{{ $currentMonthSell }}</span></h5>
+        </div>
+    </div>
 <div class="card">
    <div class="card-body text-center">
       <a href="{{ route('admin.orders.create') }}" class="btn btn-sm btn-primary">অর্ডার করুন </a>
