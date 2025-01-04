@@ -32,7 +32,7 @@
             <h5>এই মাসের সেল : <span class="text-success">{{ $currentMonthSell }}</span></h5>
         </div>
 
-        <table class="table-sm table table-bordered">
+        <table class="table-sm table table-bordered text-center">
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
@@ -52,8 +52,8 @@
             @endforeach
 
             <tr>
-                <td>Total</td>
-                <td>{{ $sum }}</td>
+                <td><b>Total</b></td>
+                <td><b class="text-success">{{ $sum }}</b></td>
             </tr>
         </table>
     </div>
