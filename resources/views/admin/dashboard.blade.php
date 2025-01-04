@@ -32,7 +32,7 @@
             <h5>এই মাসের সেল : <span class="text-success">{{ $currentMonthSell }}</span></h5>
         </div>
 
-        <table class="table-sm">
+        <table class="table-sm table table-bordered">
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
