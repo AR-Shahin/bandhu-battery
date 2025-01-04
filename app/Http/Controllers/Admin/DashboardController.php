@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\SellDetails;
 
 class DashboardController extends Controller
 {
@@ -40,9 +41,16 @@ class DashboardController extends Controller
                # "totalAmountOfMoney" => convert_eng_to_bn_number(number_format(Product::sum(DB::raw('stock * price')),2))
                 "totalAmountOfMoney" => Product::sum(DB::raw('stock * price'))
             ],
-            "currentMonthSell" => Sell::whereYear('created_at', Carbon::now()->year)
-            ->whereMonth('created_at', Carbon::now()->month)
-            ->sum('quantity')
+            "currentMonthSell" => DB::table('sell_details')
+            ->whereMonth('created_at', now()->month) // Filter by current month
+            ->whereYear('created_at', now()->year)  // Filter by current year
+            ->sum('quantity'),
+            "sellData" => SellDetails::select('products.name as product_name', DB::raw('SUM(sell_details.quantity) as total_quantity'))
+                    ->join('products', 'sell_details.product_id', '=', 'products.id') // Join products table
+                    ->whereMonth('sell_details.created_at', now()->month) // Filter for current month
+                    ->whereYear('sell_details.created_at', now()->year)   // Filter for current year
+                    ->groupBy('sell_details.product_id', 'products.name') // Group by product ID and name
+                    ->get()
         ]);
     }
 }

@@ -31,6 +31,8 @@
         <div class="card-body">
             <h5>এই মাসের সেল : <span class="text-success">{{ $currentMonthSell }}</span></h5>
         </div>
+
+        {{ dd($sellData) }}
     </div>
 <div class="card">
    <div class="card-body text-center">
