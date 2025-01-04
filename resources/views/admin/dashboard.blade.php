@@ -32,7 +32,30 @@
             <h5>এই মাসের সেল : <span class="text-success">{{ $currentMonthSell }}</span></h5>
         </div>
 
-        {{ dd($sellData) }}
+        <table class="table-sm">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+            </tr>
+
+            @php
+                $sum = 0;
+            @endphp
+            @foreach ($sellData as $item)
+                <tr>
+                    <td>{{ $item->product_name }}</td>
+                    <td>{{ $item->total_quantity }}</td>
+                    @php
+                        $sum += $item->total_quantity;
+                    @endphp
+                </tr>
+            @endforeach
+
+            <tr>
+                <td>Total</td>
+                <td>{{ $sum }}</td>
+            </tr>
+        </table>
     </div>
 <div class="card">
    <div class="card-body text-center">
