@@ -45,6 +45,11 @@ class DashboardController extends Controller
             ->whereMonth('created_at', now()->month) // Filter by current month
             ->whereYear('created_at', now()->year)  // Filter by current year
             ->sum('quantity'),
+            "totalPrice" => DB::table('sell_details')
+                ->join('products', 'sell_details.product_id', '=', 'products.id') // Join products table
+                ->whereMonth('sell_details.created_at', now()->month) // Filter for current month
+                ->whereYear('sell_details.created_at', now()->year)   // Filter for current year
+                ->sum(DB::raw('sell_details.quantity * products.price')),
             "sellData" => SellDetails::select('products.name as product_name', DB::raw('SUM(sell_details.quantity) as total_quantity'))
                     ->join('products', 'sell_details.product_id', '=', 'products.id') // Join products table
                     ->whereMonth('sell_details.created_at', now()->month) // Filter for current month
