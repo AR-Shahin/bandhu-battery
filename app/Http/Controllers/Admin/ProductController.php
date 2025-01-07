@@ -250,4 +250,8 @@ class ProductController extends Controller
 
         return $html;
     }
+
+    function stock_all() {
+        return 2;
+    }
 }

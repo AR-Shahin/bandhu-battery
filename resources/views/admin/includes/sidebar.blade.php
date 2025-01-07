@@ -83,6 +83,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('admin.products.stock_all') }}" class="nav-link">
+              <i class="nav-icon fas fa-history"></i>
+              <p>
+                স্টক
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{ route('admin.orders.index') }}" class="nav-link">
               <i class="nav-icon fab fa-first-order"></i>
               <p>

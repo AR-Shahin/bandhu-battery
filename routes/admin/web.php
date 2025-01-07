@@ -61,6 +61,7 @@ Route::prefix("admin")->middleware("auth:admin")->name("admin.")->group(function
     Route::resource("products",ProductController::class);
     Route::controller(ProductController::class)->prefix("product")->name("products.")->group(function(){
         Route::get("stock/{product}","stock")->name("stock");
+        Route::get("stock-all","stock_all")->name("stock_all");
         Route::post("stock_adjust/{product}","stock_adjust")->name("stock_adjust");
     });
 
