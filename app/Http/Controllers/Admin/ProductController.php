@@ -264,6 +264,15 @@ class ProductController extends Controller
             return $this->table($query)
                 ->addIndexColumn()
 
+                ->addColumn("created_at",function($row){
+
+                    return $row->created_at->format("Y-m-d h:i:s");
+                })
+                ->addColumn("flag",function($row){
+
+                    return $row->flag_badge;
+                })
+                ->rawColumns(["flag"])
                 ->make(true);
         }
 
