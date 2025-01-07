@@ -17,9 +17,12 @@ class ProductStock extends Model
         return $this->flag == self::ADD ? '<span class="badge badge-success">Added</span>' : '<span class="badge badge-danger">Remove</span>';
     }
 
- 
+
     function admin()  {
         return $this->belongsTo(Admin::class);
+    }
+    function product()  {
+        return $this->belongsTo(Product::class);
     }
 
 }

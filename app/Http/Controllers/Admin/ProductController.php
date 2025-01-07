@@ -251,7 +251,22 @@ class ProductController extends Controller
         return $html;
     }
 
-    function stock_all() {
-        return 2;
+    function stock_all(Request $request) {
+
+
+        if($request->ajax()){
+            $query =  ProductStock::latest("product_stocks.id")->with(["product","admin"]);
+            // $query = app(Pipeline::class)
+            //     ->send($query)
+            //     ->through([
+
+            //     ])->thenReturn();
+            return $this->table($query)
+                ->addIndexColumn()
+
+                ->make(true);
+        }
+
+        return view("admin.product.stock_all");
     }
 }
