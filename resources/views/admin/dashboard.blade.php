@@ -51,6 +51,7 @@
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
+                <th>Customer</th>
             </tr>
 
             @php
@@ -60,6 +61,7 @@
                 <tr>
                     <td>{{ $item->product_name }}</td>
                     <td>{{ $item->total_quantity }}</td>
+                    <td>{{ $item->customer_names }}</td>
                     @php
                         $sum += $item->total_quantity;
                     @endphp
