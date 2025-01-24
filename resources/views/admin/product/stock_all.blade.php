@@ -35,7 +35,8 @@
                                 <th class="text-center">Product</th>
                                 <th class="text-center">Stock</th>
                                 <th class="text-center">Flag</th>
-                                <th class="text-center">Price</th>
+                                <th class="text-center">Single Price</th>
+                                <th class="text-center">Total Price</th>
                                 <th class="text-center">Remark</th>
                                 <th class="text-center">Admin</th>
                             </tr>
@@ -62,6 +63,7 @@ initFilterDataTable("{{ route('admin.products.stock_all') }}",[
             {data: 'product.name', name: 'product.name'},
             {data: 'stock', name: 'stock'},
             {data: 'flag', name: 'flag'},
+            {data: 'single_price', name: 'single_price'},
             {data: 'price', name: 'price'},
             {data: 'remarks', name: 'remarks'},
             {data: 'admin.name', name: 'admin.name'}

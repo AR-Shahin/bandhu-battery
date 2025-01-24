@@ -271,8 +271,10 @@ class ProductController extends Controller
                     return $row->flag_badge;
                 })->addColumn("price",function($row){
                     return $row->stock * $row->product->price;
+                })->addColumn("single_price",function($row){
+                    return $row->stock / $row->product->price;
                 })
-                ->rawColumns(["flag","price"])
+                ->rawColumns(["flag","price","single_price"])
                 ->make(true);
         }
 
