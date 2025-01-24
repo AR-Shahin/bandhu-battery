@@ -272,7 +272,8 @@ class ProductController extends Controller
                 })->addColumn("price",function($row){
                     return $row->stock * $row->product->price;
                 })->addColumn("single_price",function($row){
-                    return $row->stock / $row->product->price;
+                    
+                    return $row->product?->price ?? 0;
                 })
                 ->rawColumns(["flag","price","single_price"])
                 ->make(true);
