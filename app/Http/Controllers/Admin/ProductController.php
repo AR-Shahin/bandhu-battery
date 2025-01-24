@@ -255,7 +255,7 @@ class ProductController extends Controller
 
 
         if($request->ajax()){
-            $query =  ProductStock::latest("product_stocks.id")->with(["product","admin"]);
+            $query =  ProductStock::with("product")->latest("product_stocks.id")->with(["product","admin"]);
             // $query = app(Pipeline::class)
             //     ->send($query)
             //     ->through([
@@ -265,14 +265,14 @@ class ProductController extends Controller
                 ->addIndexColumn()
 
                 ->addColumn("created_at",function($row){
-
                     return $row->created_at->format("d-m-Y h:i:s");
                 })
                 ->addColumn("flag",function($row){
-
                     return $row->flag_badge;
+                })->addColumn("price",function($row){
+                    return $row->stock * $row->product->price;
                 })
-                ->rawColumns(["flag"])
+                ->rawColumns(["flag","price"])
                 ->make(true);
         }
 
