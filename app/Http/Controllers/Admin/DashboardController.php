@@ -43,7 +43,7 @@ class DashboardController extends Controller
             ],
             "currentMonthSell" => getSellDataByDate($request->date),
 
-            "totalPrice" => getTotalPriceByDate($request->date),
+            "totalSellPrice" => getTotalPriceByDate($request->date),
             "sellData" => getSellData($request->date)
         ]);
     }

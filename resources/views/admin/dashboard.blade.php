@@ -49,7 +49,7 @@
                 </form>
             </div>
             <h5>এই মাসের সেল : <span class="text-success">{{ convert_eng_to_bn_number($currentMonthSell) }}</span></h5>
-            <h5>টোটাল : <span class="text-success">{{ convert_eng_to_bn_number($totalPrice) }} টাকা (<small>{{ bn_to_en($totalPrice) }}</small>)</span></h5>
+            <h5>টোটাল : <span class="text-success">{{ convert_eng_to_bn_number($totalSellPrice) }} টাকা (<small>{{ bn_to_en($totalSellPrice) }}</small>)</span></h5>
         </div>
 
         <table class="table-sm table table-bordered text-center">
