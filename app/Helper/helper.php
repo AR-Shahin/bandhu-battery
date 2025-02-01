@@ -192,8 +192,47 @@ function getSellData($date = null)
         ->join('customers', 'sells.customer_id', '=', 'customers.id')
         ->whereMonth('sell_details.created_at', $month)
         ->whereYear('sell_details.created_at', $year)
-        ->groupBy('sell_details.product_id', 'products.name')          
+        ->groupBy('sell_details.product_id', 'products.name')
         ->get();
 
     return $sellData;
+}
+
+
+function getSellDataByDate($date = null)
+{
+    // If no date is provided, use the current date
+    $date = $date ? Carbon::parse($date) : now();
+
+    // Get the month and year from the provided date
+    $month = $date->month;
+    $year = $date->year;
+
+    // Query to calculate the total quantity sold in the specific month and year
+    $currentMonthSell = DB::table('sell_details')
+        ->whereMonth('created_at', $month)    // Filter by month
+        ->whereYear('created_at', $year)      // Filter by year
+        ->sum('quantity');                     // Sum of the quantities
+
+    return $currentMonthSell;
+}
+
+
+function getTotalPriceByDate($date = null)
+{
+    // If no date is provided, use the current date
+    $date = $date ? Carbon::parse($date) : now();
+
+    // Get the month and year from the provided date
+    $month = $date->month;
+    $year = $date->year;
+
+    // Query to calculate the total price for the specified month and year
+    $totalPrice = DB::table('sell_details')
+        ->join('products', 'sell_details.product_id', '=', 'products.id')  // Join products table
+        ->whereMonth('sell_details.created_at', $month)                       // Filter by month
+        ->whereYear('sell_details.created_at', $year)                         // Filter by year
+        ->sum(DB::raw('sell_details.quantity * products.price'));             // Sum of quantity * price
+
+    return $totalPrice;
 }

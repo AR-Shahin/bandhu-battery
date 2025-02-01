@@ -41,15 +41,9 @@ class DashboardController extends Controller
                # "totalAmountOfMoney" => convert_eng_to_bn_number(number_format(Product::sum(DB::raw('stock * price')),2))
                 "totalAmountOfMoney" => Product::sum(DB::raw('stock * price'))
             ],
-            "currentMonthSell" => DB::table('sell_details')
-            ->whereMonth('created_at', now()->month) // Filter by current month
-            ->whereYear('created_at', now()->year)  // Filter by current year
-            ->sum('quantity'),
-            "totalPrice" => DB::table('sell_details')
-                ->join('products', 'sell_details.product_id', '=', 'products.id') // Join products table
-                ->whereMonth('sell_details.created_at', now()->month) // Filter for current month
-                ->whereYear('sell_details.created_at', now()->year)   // Filter for current year
-                ->sum(DB::raw('sell_details.quantity * products.price')),
+            "currentMonthSell" => getSellDataByDate($request->date),
+
+            "totalPrice" => getTotalPriceByDate($request->date),
             "sellData" => getSellData($request->date)
         ]);
     }
