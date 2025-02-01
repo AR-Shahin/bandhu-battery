@@ -44,7 +44,7 @@
         <div class="card-body">
             <div class="card-header px-0">
                 <form method="GET" action="{{ route('admin.dashboard') }}">
-                    <input type="date" name="date" id="date" value="{{ request('date') }}">
+                    <input type="month" name="date" id="date" value="{{ request('date') ?? now()->format('Y-m') }}">
                     <button type="submit" class="btn btn-sm btn-success">Filter</button>
                 </form>
             </div>
