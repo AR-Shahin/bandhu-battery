@@ -1,14 +1,15 @@
 <?php
 use Carbon\Carbon;
+use App\Models\SellDetails;
 use Illuminate\Support\Str;
+use App\Helper\Trait\Helper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use App\Helper\File\File as FileFile;
-use App\Helper\Trait\Helper;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Storage;
 use Rakibhstu\Banglanumber\NumberToBangla;
 
 
@@ -167,4 +168,32 @@ function convertNumberToBanglaWords($number)
 function bn_to_en($num)  {
     $numto = new NumberToBangla();
     return $numto->bnWord($num);
+}
+
+
+
+function getSellData($date = null)
+{
+    // If no date is passed, use the current date
+    $date = $date ? Carbon::parse($date) : now();
+
+    // Get the month and year from the provided or default date
+    $month = $date->month;
+    $year = $date->year;
+
+    // Query to fetch the data
+    $sellData = SellDetails::select(
+            'products.name as product_name',
+            DB::raw('SUM(sell_details.quantity) as total_quantity'),
+            DB::raw('GROUP_CONCAT(DISTINCT customers.name ORDER BY customers.name ASC) as customer_names')
+        )
+        ->join('products', 'sell_details.product_id', '=', 'products.id')
+        ->join('sells', 'sell_details.sell_id', '=', 'sells.id')
+        ->join('customers', 'sells.customer_id', '=', 'customers.id')
+        ->whereMonth('sell_details.created_at', $month)
+        ->whereYear('sell_details.created_at', $year)
+        ->groupBy('sell_details.product_id', 'products.name')          
+        ->get();
+
+    return $sellData;
 }

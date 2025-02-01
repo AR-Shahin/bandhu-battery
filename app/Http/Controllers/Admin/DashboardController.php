@@ -15,7 +15,7 @@ use App\Models\SellDetails;
 class DashboardController extends Controller
 {
     private int $take = 15;
-    function index()  {
+    function index(Request $request)  {
         $products = Product::pluck('stock', 'name')->toArray();
         return view("admin.dashboard",[
             "warning_products" => Product::isActive()->where("stock","<=",10)->take(10)->get(['id',"name","stock"]),
@@ -50,18 +50,7 @@ class DashboardController extends Controller
                 ->whereMonth('sell_details.created_at', now()->month) // Filter for current month
                 ->whereYear('sell_details.created_at', now()->year)   // Filter for current year
                 ->sum(DB::raw('sell_details.quantity * products.price')),
-            "sellData" => SellDetails::select(
-                'products.name as product_name',
-                DB::raw('SUM(sell_details.quantity) as total_quantity'),
-                DB::raw('GROUP_CONCAT(DISTINCT customers.name ORDER BY customers.name ASC) as customer_names')
-            )
-            ->join('products', 'sell_details.product_id', '=', 'products.id') // Join products table
-            ->join('sells', 'sell_details.sell_id', '=', 'sells.id')         // Join sells table
-            ->join('customers', 'sells.customer_id', '=', 'customers.id')   // Join customers table
-            ->whereMonth('sell_details.created_at', now()->month)           // Filter for current month
-            ->whereYear('sell_details.created_at', now()->year)             // Filter for current year
-            ->groupBy('sell_details.product_id', 'products.name')           // Group by product ID and name
-            ->get()
+            "sellData" => getSellData($request->date)
         ]);
     }
 }

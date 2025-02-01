@@ -43,6 +43,12 @@
     </div>
     <div class="card">
         <div class="card-body">
+            <div class="card-header px-0">
+                <form method="GET" action="{{ route('admin.dashboard') }}">
+                    <input type="date" name="date" id="date" value="{{ request('date') }}">
+                    <button type="submit" class="btn btn-sm btn-success">Filter</button>
+                </form>
+            </div>
             <h5>এই মাসের সেল : <span class="text-success">{{ convert_eng_to_bn_number($currentMonthSell) }}</span></h5>
             <h5>টোটাল : <span class="text-success">{{ convert_eng_to_bn_number($totalPrice) }} টাকা (<small>{{ bn_to_en($totalPrice) }}</small>)</span></h5>
         </div>
