@@ -1,17 +1,21 @@
 <?php
 
 use App\Models\Admin;
+use App\Mail\TestMail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+use App\Helper\File\File as FileFile;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+
 use App\Http\Controllers\Admin\Auth\Foo;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Mail\TestMail;
+use App\Models\Image;
 use Google\Service\NetworkManagement\RerunConnectivityTestRequest;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Mail;
-use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 Route::get('/', function () {
     // $admin =  Admin::first();
@@ -36,7 +40,21 @@ require __DIR__.'/admin/web.php';
 Route::view("ars","admin.layouts.app")->name("ars");
 
 
-Route::get('bal',[LoginController::class,"create"]);
+Route::get('image',function () {
+    return view("image");
+});
+Route::post('image',function (Request $request) {
+    if(!$request->hasFile("image")){
+        return back();
+    }
+    $img =  Image::create([
+        "image" => FileFile::upload($request->file("image"),"ars")
+     ]);
+     return response([
+        "message" => "Image uploaded successfully",
+        "path" => asset($img->image)
+     ]);
+})->name("image");
 
 Route::get("drive", function () {
 
