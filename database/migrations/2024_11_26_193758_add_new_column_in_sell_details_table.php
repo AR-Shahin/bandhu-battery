@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sell_details', function (Blueprint $table) {
-            $table->dateTime("date")->nullable();
+            // $table->dateTime("date")->nullable();
         });
 
     }
