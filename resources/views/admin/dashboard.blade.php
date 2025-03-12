@@ -26,18 +26,7 @@
             </div>
          </div>
 
-         {{-- <div class="col-lg-3 col-6" bis_skin_checked="1">
-            <div class="small-box bg-secondary" bis_skin_checked="1">
-               <div class="inner" bis_skin_checked="1">
-                  <h4>{{ convert_eng_to_bn_number(($products['totalAmountOfMoney'] + $totalPrice)) }} TK</h4>
-                  <p>{{ bn_to_en(($products['totalAmountOfMoney'] + $totalPrice))}} টাকা</p>
-               </div>
-               <div class="icon" bis_skin_checked="1">
-                  <i class="ion ion-bag"></i>
-               </div>
-               <a href="{{ route('admin.products.index') }}" class="small-box-footer">টোটাল</a>
-            </div>
-         </div> --}}
+       
 
     </div>
     <div class="card">
