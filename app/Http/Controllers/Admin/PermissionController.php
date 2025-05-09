@@ -62,7 +62,7 @@ class PermissionController extends Controller
 
         return redirect()->back();
     }
-    private function generateEditButton($row){
+    protected function generateEditButton($row){
         return '
         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#rowId_'.$row['id'].'">
          <i class="fa fa-edit"></i>

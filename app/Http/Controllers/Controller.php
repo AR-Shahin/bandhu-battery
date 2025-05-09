@@ -36,7 +36,7 @@ abstract class Controller
 
 
 
-    protected function generateEditButton($row, $route)
+    public function _generateEditButton($row, $route)
     {
         $html = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#rowId_' . $row['id'] . '">
             <i class="fa fa-edit"></i>
